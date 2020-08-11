@@ -2,7 +2,12 @@
 
 {% block content %}
 <br>
-{% for person in results %}
+{% if current_user.profile.following.all.count > 0 %}
+<div class='home-icons w-25 my-auto'>
+    <h5 class='text-center my-auto'>Users {{ parameter|title }} Follows</h5>
+</div>
+{% endif %}
+{% for person in current_user.profile.following.all %}
 <div class="row no-gutters user-page">
     <div class='col-12 profile-background my-3'>
         <div class="profile-block">
@@ -12,7 +17,13 @@
             <div class='bio-col my-auto pr-0'>
                 <a class='username-link' href="{% url 'profile' person.username %}"><h4>{{ person.username|title }}</h4></a>
                 <p class='mb-2'>{{ person.profile.bio|truncatechars:90 }}</p>
+                {% if user.username == parameter %}
+                <a class='btn btn-outline-light mt-0 user-btn' href="{% url 'unfollow' person.id %}">Unfollow User</a>
+                {% elif person not in following_list and person != user %}
                 <a class='btn btn-outline-light mt-0 user-btn' href="{% url 'follow' person.id %}">Follow User</a>
+                {% else %}
+                <div class='py-2'></div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -21,7 +32,7 @@
 <div class="row no-gutters user-page">
     <div class='col-12 profile-background my-3'>
         <div class="profile-block">
-            <p class='m-auto p-4'>Sorry, there are not any users with that username.</p>
+            <p class='m-auto p-4'>{{ parameter|title }} is not following anybody.</p>
         </div>
     </div>
 </div>

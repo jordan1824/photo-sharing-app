@@ -7,8 +7,18 @@
                 <img class='profile-image' src="{{ person.profile.image.url }}" alt="User Profile Image">
             </div>
             <div class='bio-col my-2'>
-                <h4>{{ person.username|title }}</h4>
-                <p>{{ person.profile.bio }}</p>
+                <h4 class='d-inline-block'>{{ person.username|title }}</h4>
+                <div class='d-inline-block'>
+                    <div class='following'><a href="{% url 'following' person.username %}"><small>Following {{ person.profile.following.all.count }}</small></a></div>
+                    <div class='followers'><a href="{% url 'followers' person.username %}"><small>{{ person.followers.all.count }}
+                    {% if person.followers.all.count == 1 %}
+                    Follower
+                    {% else %}
+                    Followers
+                    {% endif %}
+                    </small></a></div>
+                </div>
+                <p class='mt-2'>{{ person.profile.bio }}</p>
                 {% if person == user %}
                     <a class='btn btn-outline-light follow-btn' href="{% url 'edit-profile' user.profile.id %}">Edit Profile</a>
                 {% else %}

@@ -135,7 +135,7 @@ body {
 .profile-block {
     display: flex;
     position: relative;
-    width: 600px;
+    width: 650px;
     margin: auto;
     color: white;
     background: #262B2F;
@@ -149,7 +149,7 @@ body {
 .bio-col {
     border-left: 1px solid white;
     padding-left: 13px;
-    padding-right: 100px;
+    padding-right: 120px;
     overflow-x: hidden;
 }
 .follow-btn {
@@ -157,6 +157,27 @@ body {
     top: 15px;
     right: 15px;
     padding: 4px 10px;
+}
+.following {
+    display: inline-block;
+    border-left: 1px solid lightgrey;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+.followers {
+    display: inline-block;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+}
+.following a, .followers a {
+    color: lightgrey;
+}
+.following a:hover, .followers a:hover {
+    color: white;
+    text-decoration: none;
 }
 
 
@@ -262,6 +283,9 @@ body {
 .username-link:hover {
     text-decoration: none;
     color: white;
+}
+.user-page .bio-col {
+    padding-right: 50px !important;
 }
 
 /* ==== END OF SEARCH PAGE ==== */

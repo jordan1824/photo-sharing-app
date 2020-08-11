@@ -1,0 +1,38 @@
+{% extends 'photo_sharing/layout.html' %}
+
+{% block content %}
+<br>
+{% if current_user.followers.all.count > 0 %}
+<div class='home-icons w-25 my-auto'>
+    <h5 class='text-center my-auto'>{{ parameter|title }}'s Followers</h5>
+</div>
+{% endif %}
+{% for person in current_user.followers.all %}
+<div class="row no-gutters user-page">
+    <div class='col-12 profile-background my-3'>
+        <div class="profile-block">
+            <div class='image-col mr-3 pl-1 my-auto'>
+                <img class='profile-image' src="{{ person.user.profile.image.url }}" alt="User Profile Image">
+            </div>
+            <div class='bio-col my-auto pr-0'>
+                <a class='username-link' href="{% url 'profile' person.user.username %}"><h4>{{ person.user.username|title }}</h4></a>
+                <p class='mb-2'>{{ person.user.profile.bio|truncatechars:90 }}</p>
+                {% if person.user not in following_list and person.user != user %}
+                <a class='btn btn-outline-light mt-0 user-btn' href="{% url 'follow' person.user.id %}">Follow User</a>
+                {% else %}
+                <div class='py-2'></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="row no-gutters user-page">
+    <div class='col-12 profile-background my-3'>
+        <div class="profile-block">
+            <p class='m-auto p-4'>{{ parameter|title }} does not have any followers</p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

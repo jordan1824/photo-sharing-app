@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from .models import Profile
 from photo_sharing.models import Post
@@ -36,4 +36,37 @@ def user_list(request):
         Q(username__icontains=query)).exclude(id=request.user.id).all()
     return render(request, 'users/user_list.html', {
         'results': results
+    })
+
+
+def follow(request, pk):
+    if request.user == User.objects.get(id=pk):
+        return redirect('home')
+    user_profile = User.objects.get(id=request.user.id).profile
+    user_profile.following.add(User.objects.get(id=pk))
+    return redirect('home')
+
+
+def unfollow(request, pk):
+    user = User.objects.get(id=pk)
+    current_user_profile = User.objects.get(id=request.user.id).profile
+    current_user_profile.following.remove(user)
+    return redirect('home')
+
+
+def followers(request, username):
+    user = User.objects.get(username=username)
+    return render(request, 'users/followers.html', {
+        'current_user': user,
+        'parameter': username,
+        'following_list': list(Profile.objects.get(user=request.user).following.all())
+    })
+
+
+def following(request, username):
+    user = User.objects.get(username=username)
+    return render(request, 'users/following.html', {
+        'current_user': user,
+        'parameter': username,
+        'following_list': list(Profile.objects.get(user=request.user).following.all())
     })
