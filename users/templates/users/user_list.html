@@ -1,0 +1,29 @@
+{% extends 'photo_sharing/layout.html' %}
+
+{% block content %}
+<br>
+{% for person in results %}
+<div class="row no-gutters user-page">
+    <div class='col-12 profile-background my-3'>
+        <div class="profile-block">
+            <div class='image-col mr-3 pl-1 my-auto'>
+                <img class='profile-image' src="{{ person.profile.image.url }}" alt="User Profile Image">
+            </div>
+            <div class='bio-col my-auto pr-0'>
+                <a class='username-link' href="{% url 'profile' person.username %}"><h4>{{ person.username|title }}</h4></a>
+                <p class='mb-2'>{{ person.profile.bio|truncatechars:90 }}</p>
+                <a class='btn btn-outline-light mt-0 user-btn' href="#">Follow User</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="row no-gutters user-page">
+    <div class='col-12 profile-background my-3'>
+        <div class="profile-block">
+            <p class='m-auto p-4'>Sorry, there are not any users with that username.</p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

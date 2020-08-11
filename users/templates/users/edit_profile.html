@@ -1,0 +1,30 @@
+{% extends 'photo_sharing/layout.html' %}
+
+{% block content %}
+<div class="card mx-auto my-4 profile-card bg-light" style="width: 26rem;">
+    <div class="card-header py-3 bg-dark">
+        <h3 class='text-center my-0'>Update Profile</h3>
+    </div>
+    <div class='update-profile-image py-3'>
+        <img src="{{ user.profile.image.url }}" class="card-img-top rounded-circle" alt="...">
+    </div>
+  <div class="card-body bg-dark">
+    <form method='POST' enctype='multipart/form-data'>
+        {% csrf_token %}
+        <p class='form-label'>Profile Picture:</p>
+        <div class='image-form'>
+            {{ form.image }}
+        </div>
+        <br>
+        <p class='form-label'>Bio:</p>
+        <div class='bio-form'>
+            {{ form.bio }}
+        </div>
+        <br>
+        <div class='form-button'>
+            <button type='submit' class='btn btn-outline-light'>Update Profile</button>
+        </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

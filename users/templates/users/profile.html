@@ -1,0 +1,38 @@
+{% extends 'photo_sharing/layout.html' %}
+
+{% block content %}
+    <div class='profile-background my-4'>
+        <div class="profile-block">
+            <div class='image-col mr-3 pl-1'>
+                <img class='profile-image' src="{{ person.profile.image.url }}" alt="User Profile Image">
+            </div>
+            <div class='bio-col my-2'>
+                <h4>{{ person.username|title }}</h4>
+                <p>{{ person.profile.bio }}</p>
+                {% if person == user %}
+                    <a class='btn btn-outline-light follow-btn' href="{% url 'edit-profile' user.profile.id %}">Edit Profile</a>
+                {% else %}
+                    <a class='btn btn-outline-light follow-btn' href="#">Follow</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center">
+        {% for post in posts %}
+            <div class="col-3 post-block">
+                <div class='post-image'>
+                    <img src="{{ post.image.url }}" alt="Post Image">
+                </div>
+                <p class='post-date'>{{ post.date_created|date:'F d, Y' }}</p>
+                <div class='post-description-section'>
+                    <div class='post-user-image'>
+                        <img src="{{ post.user.profile.image.url }}" alt="User Profile Image">
+                    </div>
+                    <div class='post-description'>
+                        <p class='post-p'>{{ post.description|truncatechars:85 }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
