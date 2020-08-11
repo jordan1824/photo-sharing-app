@@ -1,6 +1,11 @@
 {% extends 'photo_sharing/layout.html' %}
 
 {% block content %}
-<h3>You have been logged out.</h3>
-<a href="{% url 'login' %}">Log In Again</a>
+<div class="row no-gutters user-page">
+    <div class='col-12 profile-background my-3'>
+        <div class="profile-block my-4 py-5 logout">
+            <p class='d-block text-center mx-auto mb-0'>You have been logged out.<br><a class='d-block w-auto mx-auto' href="{% url 'login' %}">Log In Again</a></p>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -12,7 +12,11 @@
             <div class='bio-col my-auto pr-0'>
                 <a class='username-link' href="{% url 'profile' person.username %}"><h4>{{ person.username|title }}</h4></a>
                 <p class='mb-2'>{{ person.profile.bio|truncatechars:90 }}</p>
+                {% if person not in following_list %}
                 <a class='btn btn-outline-light mt-0 user-btn' href="{% url 'follow' person.id %}">Follow User</a>
+                {% else %}
+                <div class='py-2'></div>
+                {% endif %}
             </div>
         </div>
     </div>

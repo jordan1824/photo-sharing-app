@@ -32,7 +32,7 @@
                 <li class='nav-item mx-auto'><a class='nav-link' href='{% url "logout" %}'>Logout</a></li>
             {% else %}
                 <li class='nav-item mx-auto'><a class='nav-link' href='{% url "login" %}'>Login</a></li>
-                <li class='nav-item mx-auto'><a class='nav-link' href='#'>Register</a></li>
+                <li class='nav-item mx-auto'><a class='nav-link' href='{% url "register" %}'>Register</a></li>
             {% endif %}
         </ul>
       </div>

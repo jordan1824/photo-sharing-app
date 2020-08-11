@@ -22,7 +22,7 @@
                 {% if person == user %}
                     <a class='btn btn-outline-light follow-btn' href="{% url 'edit-profile' user.profile.id %}">Edit Profile</a>
                 {% else %}
-                    <a class='btn btn-outline-light follow-btn' href="#">Follow</a>
+                    <a class='btn btn-outline-light follow-btn' href="{% url 'follow' person.id %}">Follow User</a>
                 {% endif %}
             </div>
         </div>

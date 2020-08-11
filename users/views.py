@@ -5,6 +5,7 @@ from photo_sharing.models import Post
 from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
+from .forms import UserRegistrationForm
 
 
 def profile(request, username):
@@ -35,7 +36,8 @@ def user_list(request):
     results = User.objects.filter(
         Q(username__icontains=query)).exclude(id=request.user.id).all()
     return render(request, 'users/user_list.html', {
-        'results': results
+        'results': results,
+        'following_list': list(Profile.objects.get(user=request.user).following.all())
     })
 
 
@@ -69,4 +71,17 @@ def following(request, username):
         'current_user': user,
         'parameter': username,
         'following_list': list(Profile.objects.get(user=request.user).following.all())
+    })
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserRegistrationForm
+    return render(request, 'users/register.html', {
+        'form': form
     })

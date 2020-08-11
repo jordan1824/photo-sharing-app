@@ -1,9 +1,17 @@
 {% extends 'photo_sharing/layout.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<form method='POST'>
-    {% csrf_token %}
-    {{ form }}
-    <button type='submit'>Submit</button>
-</form>
+<div class="form-background">
+    <h2 class='text-center mb-4'>Log In</h2>
+    <form method='POST'>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <a href="#">Forgot Password?</a>
+        <button class='submit-btn btn btn-primary mt-2' type='submit'>Login</button>
+    </form>
+    <div class='text-center mt-3'>
+        <a class='text-white' href="{% url 'register' %}">Create New Account</a>
+    </div>
+</div>
 {% endblock %}

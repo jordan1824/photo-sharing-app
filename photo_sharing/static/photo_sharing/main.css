@@ -290,6 +290,52 @@ body {
 
 /* ==== END OF SEARCH PAGE ==== */
 
+/* ==== LOGIN PAGE ==== */
+
+.form-background {
+    background: #262B2F;
+    width: 500px;
+    margin: 50px auto 60px;
+    padding: 40px 5px 50px;
+    box-shadow: 7px 7px 13px grey;
+    border: 2px solid white;
+}
+.form-background form {
+    width: 70%;
+    margin: auto;
+}
+.submit-btn {
+    display: block;
+    width: auto;
+    margin: auto;
+    font-size: 18px;
+}
+.logout p {
+    font-size: 20px;
+}
+.logout p a {
+    font-size: 17px;
+}
+
+/* ==== END OF LOGIN PAGE ==== */
+
+/* ==== REGISTER PAGE ==== */
+
+.register-form-background {
+    background: #262B2F;
+    width: 600px;
+    margin: 50px auto 60px;
+    padding: 40px 5px 50px;
+    box-shadow: 7px 7px 13px grey;
+    border: 2px solid white;
+}
+.register-form-background form {
+    width: 80%;
+    margin: auto;
+}
+
+/* ==== END OF REGISTER PAGE ==== */
+
 /* ==== FOOTER ==== */
 
 footer {
