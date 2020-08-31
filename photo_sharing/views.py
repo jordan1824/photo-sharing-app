@@ -15,10 +15,10 @@ def home_feed(request):
     following_list = list(Profile.objects.filter(user=request.user).values("following").all())
     following_list = list(map(lambda item: item["following"], following_list))
     following_list.append(request.user.id)
-    all_posts = Post.objects.filter(user_id__in=following_list).all().order_by('-date_created')
-    return render(request, "photo_sharing/post_list.html", {
+    newest_posts = Post.objects.filter(user_id__in=following_list).all().order_by('-date_created')[:10]
+    return render(request, 'photo_sharing/post_list.html', {
         "post_likes": list(PostLike.objects.filter(user=request.user).values_list('post_id', flat=True).all()),
-        "all_posts": all_posts
+        "newest_posts": newest_posts
     })
 
 

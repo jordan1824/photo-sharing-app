@@ -1,16 +1,16 @@
 {% extends 'photo_sharing/layout.html' %}
-
 {% block content %}
-<div class="row justify-content-around no-gutters">
-    <div class="col-3 mt-5">
+{% load static %}
+<div class='row justify-content-around no-gutters'>
+    <div class='col-3'>
 
     </div>
-    <div class='col-6'>
+    <div id='global-posts' class='col-6'>
         <br>
         <div class='home-icons'>
             <p>Insert a list of icons here.</p>
         </div>
-        {% for post in all_posts %}
+        {% for post in newest_posts %}
             <div class="row no-gutters justify-content-center home">
                 <div class="col-9 post-block">
                     <div class='post-image'>
@@ -51,7 +51,7 @@
         <div class='bg-dark text-white py-3 px-4 mt-4'>Your feed is empty. Begin following people to see their posts here.</div>
         {% endfor %}
     </div>
-    <div class="col-3 mt-5">
+    <div class='col-3'>
         <!-- <div class='bg-dark mt-5 text-center border border-dark mx-auto w-75 p-3'>
             <h5>{{ user.username }}</h5>
             <p>{{ user.profile.bio }}</p>
@@ -59,4 +59,5 @@
         </div> -->
     </div>
 </div>
+<script src='{% static "photo_sharing/dynamicLoad.js" %}'></script>
 {% endblock %}
