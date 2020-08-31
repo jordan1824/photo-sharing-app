@@ -181,36 +181,40 @@ let createPost = function(post) {
 
 // Get rid of this later. This automatically loads in all the posts at once
 // You will want to limit this to only 10 or 20 later on, instead of all
-fetch("/dynamic-load/")
-  .then(response => response.json())
-  .then(data => {
-    data.forEach(post => {
-      let likeBtn = createPost(post)
-      likeBtn.addEventListener("click", (event) => {
-        event.preventDefault()
-        likeBtnAction(likeBtn)
-      })
-    })
-  }).catch(() => {
-    console.log("There was an error running the fetch.")
-  })
-
-
-
-
-// window.addEventListener("scroll", (event) => {
-//   if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
-//       fetch("/dynamic-load/")
-//       .then(response => response.json())
-//       .then(data => {
-//         data.forEach(post => {
-//           createPost(post)
-//         })
-//       }).catch(() => {
-//         console.log("There was an error running the fetch.")
+// fetch("/dynamic-load/")
+//   .then(response => response.json())
+//   .then(data => {
+//     data.forEach(post => {
+//       let likeBtn = createPost(post)
+//       likeBtn.addEventListener("click", (event) => {
+//         event.preventDefault()
+//         likeBtnAction(likeBtn)
 //       })
-//   }
-// })
+//     })
+//   }).catch(() => {
+//     console.log("There was an error running the fetch.")
+//   })
+
+
+
+
+window.addEventListener("scroll", (event) => {
+  if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+    fetch("/dynamic-load/")
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(post => {
+        let likeBtn = createPost(post)
+        likeBtn.addEventListener("click", (event) => {
+          event.preventDefault()
+          likeBtnAction(likeBtn)
+        })
+      })
+    }).catch(() => {
+      console.log("There was an error running the fetch.")
+    })
+  }
+})
 
 
 // End of Asynchronous Post Load
