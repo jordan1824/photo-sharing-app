@@ -3,6 +3,9 @@ body {
     font-family: Helvetica, sans-serif;
     color: #f8f9fa;
 }
+main {
+    min-height: 100vh;
+}
 
 /* ==== NAVBAR ==== */
 
@@ -74,13 +77,20 @@ body {
     margin: 5px 5px 5px 15px;
     position: relative;
     padding-right: 120px;
+    width: 100%;
+    min-height: 68px;
 }
 .home .post-date {
     top: 40px;
     right: 0;
+    padding: 6px 0;
+    font-size: 0.7rem;
     background: #262B2F;
+    text-align: center;
     border: 1px solid white;
     color: white;
+    box-sizing: border-box;
+    width: 108px;
 }
 .like-btn {
     position: absolute;
@@ -111,6 +121,9 @@ body {
 .liked .fa-heart {
     color: red;
     margin-right: 8px;
+}
+.likes-hidden {
+    display: none;
 }
 .likes {
     display: inline-block;
