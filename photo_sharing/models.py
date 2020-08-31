@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 
 
 class Post(models.Model):
@@ -7,6 +8,13 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post-images')
     description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        image = Image.open(self.image.path)
+        imageDimensions = (600, 600)
+        image.thumbnail(imageDimensions)
+        image.save(self.image.path)
 
     def __str__(self):
         return f'{self.user.username} Post'

@@ -52,7 +52,10 @@ def global_posts(request):
 
 
 def dynamic_load(request):
-    # num = request.GET.get("start")
+    
+    start = int(request.GET["start"])
+    end = int(request.GET["end"])
+
     # Only gets posts of following & current users posts
     following_list = list(Profile.objects.filter(user=request.user).values("following").all())
     following_list = list(map(lambda item: item["following"], following_list))
@@ -65,7 +68,7 @@ def dynamic_load(request):
     current_user_post_likes = list(PostLike.objects.filter(user=request.user).all().values("post"))
     current_user_post_likes = [item["post"] for item in current_user_post_likes]
 
-    for item in results:
+    for item in results[start:end]:
         post = item
         post["authorProfileImage"] = list(Profile.objects.filter(user_id=item['user']).all().values("image"))[0]["image"]
         post["author"] = list(User.objects.filter(id=item['user']).all().values("username"))[0]["username"]
@@ -74,8 +77,7 @@ def dynamic_load(request):
         post["date_created"] = post["date_created"].strftime("%B %d, %Y")
         posts.append(post)
 
-    # if num > len(results) - 1:
-    #     raise Http404("Post not found.")
-    # length = len(results) - 1
-    # posts = dict(results[length - num])
-    return JsonResponse(posts, safe=False)
+    if posts:
+        return JsonResponse(posts, safe=False)
+    else:
+        return JsonResponse({"empty": True}, safe=False)

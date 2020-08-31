@@ -179,8 +179,7 @@ let createPost = function(post) {
 }
 
 
-// Get rid of this later. This automatically loads in all the posts at once
-// You will want to limit this to only 10 or 20 later on, instead of all
+// Get rid of this now. This automatically loads in all the posts at once, which you don't need anymore
 // fetch("/dynamic-load/")
 //   .then(response => response.json())
 //   .then(data => {
@@ -197,22 +196,36 @@ let createPost = function(post) {
 
 
 
+// Make sure that you start requesting at the 10th post onwards
+// Because I automatically load the first 10 in with the base HTML / django
+// You will have repeats if you don't start from the 10th one (or 11th, you will need to experiment)
+let start = 10
+let end = 20
+let reachedEnd = false
 
 window.addEventListener("scroll", (event) => {
-  if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
-    fetch("/dynamic-load/")
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(post => {
-        let likeBtn = createPost(post)
-        likeBtn.addEventListener("click", (event) => {
-          event.preventDefault()
-          likeBtnAction(likeBtn)
-        })
+  if (!reachedEnd) {
+    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+      fetch(`/dynamic-load/?start=${start}&end=${end}`)
+      .then(response => response.json())
+      .then(data => {
+        if (!data.empty) {
+          data.forEach(post => {
+            let likeBtn = createPost(post)
+            likeBtn.addEventListener("click", (event) => {
+              event.preventDefault()
+              likeBtnAction(likeBtn)
+            })
+          })
+          start += 10
+          end += 10
+        } else {
+          reachedEnd = true
+        }
+      }).catch(() => {
+        console.log("There was an error running the fetch.")
       })
-    }).catch(() => {
-      console.log("There was an error running the fetch.")
-    })
+    }
   }
 })
 
