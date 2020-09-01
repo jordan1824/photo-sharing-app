@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from .models import Post, PostLike
 from django.http import HttpResponse, Http404
 from django.http import JsonResponse
@@ -41,13 +41,9 @@ def likes_list(request, pk):
 
 
 def global_posts(request):
-    following_list = list(Profile.objects.filter(user=request.user).values("following").all())
-    following_list = list(map(lambda item: item["following"], following_list))
-    following_list.append(request.user.id)
-    newest_posts = Post.objects.filter(user_id__in=following_list).all().order_by('-date_created')[:10]
     return render(request, 'photo_sharing/global.html', {
         "post_likes": list(PostLike.objects.filter(user=request.user).values_list('post_id', flat=True).all()),
-        "newest_posts": newest_posts
+        "all_posts": Post.objects.all().order_by('-date_created')
     })
 
 
@@ -81,3 +77,26 @@ def dynamic_load(request):
         return JsonResponse(posts, safe=False)
     else:
         return JsonResponse({"empty": True}, safe=False)
+
+
+def get_single_post(request, id):
+    post = list(Post.objects.filter(id=id).all().values('id', 'user', 'image', 'description', 'date_created'))
+
+    if post:
+        post = post[0]
+        current_user_post_likes = list(PostLike.objects.filter(user=request.user).all().values("post"))
+        current_user_post_likes = [item["post"] for item in current_user_post_likes]
+        post["authorProfileImage"] = list(Profile.objects.filter(user_id=post['user']).all().values("image"))[0]["image"]
+        post["author"] = list(User.objects.filter(id=post['user']).all().values("username"))[0]["username"]
+        post["isLiked"] = True if post['id'] in current_user_post_likes else False
+        post["postLikesCount"] = PostLike.objects.filter(post_id=post['id']).count()
+        post["date_created"] = post["date_created"].strftime("%B %d, %Y")
+        return JsonResponse(post, safe=False)
+    else:
+        raise Http404("Post could not be found.")
+
+def create_post(request):
+    return render(request, "photo_sharing/create_post.html")
+
+def update_post(request, id):
+    return render(request, "photo_sharing/update_post.html")

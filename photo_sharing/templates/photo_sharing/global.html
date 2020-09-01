@@ -1,63 +1,21 @@
-{% extends 'photo_sharing/layout.html' %}
+{% extends "photo_sharing/layout.html" %}
+
 {% block content %}
 {% load static %}
-<div class='row justify-content-around no-gutters'>
-    <div class='col-3'>
 
-    </div>
-    <div id='global-posts' class='col-6'>
-        <br>
-        <div class='home-icons'>
-            <p>Insert a list of icons here.</p>
+
+<div class='global-feed'>
+    {% for post in all_posts %}
+        <div class='post-img-div'>
+            <img data-id='{{post.id}}' class='post-img' src="{{ post.image.url }}" alt="Post Image">
         </div>
-        {% for post in newest_posts %}
-            <div class="row no-gutters justify-content-center home">
-                <div class="col-9 post-block">
-                    <div class='post-image'>
-                        <img src="{{ post.image.url }}" alt="Post Image">
-                    </div>
-                    <div class='post-description-section'>
-                        <div class='post-user-image'>
-                            <img src="{{ post.user.profile.image.url }}" alt="User Profile Image">
-                        </div>
-                        <div class='post-description'>
-                            <a class='username-link' href="{% url 'profile' post.user.username %}"><h6>{{ post.user.username|title }}</h6></a>
-                                <div class='likes'><a href="{% url 'likes-list' post.id %}"><p>
-                                    {% if post.postlike_set.all.count > 0 %}
-                                    <span class="likes-count">{{ post.postlike_set.all.count }}</span>
-                                    {% else %}
-                                    <span class="likes-count likes-hidden">0</span>
-                                    {% endif %}
-                                    {% if post.postlike_set.all.count == 1 %}
-                                    <span id="like-title"> Like</span>
-                                    {% elif post.postlike_set.all.count > 1 %}
-                                    <span id="like-title"> Likes</span>
-                                    {% else %}
-                                    <span class='likes-hidden' id="like-title"> Like</span>
-                                    {% endif %}
-                                    </p></a></div>
-                            <p class='post-p'>{{ post.description|truncatechars:90 }}</p>
-                            {% if post.id not in post_likes %}
-                            <a href="{% url 'post-like' post.id %}" data-id="{{post.id}}" class='like-btn'><p><i class="fa fa-heart" aria-hidden="true"></i>Like Post</p></a>
-                            {% else %}
-                            <a href="{% url 'post-like' post.id %}" data-id="{{post.id}}" class='like-btn liked'><p><i class="fa fa-heart" aria-hidden="true"></i>Liked Post</p></a>
-                            {% endif %}
-                            <p class='post-date'>{{ post.date_created|date:'F d, Y' }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% empty %}
-        <div class='bg-dark text-white py-3 px-4 mt-4'>Your feed is empty. Begin following people to see their posts here.</div>
-        {% endfor %}
-    </div>
-    <div class='col-3'>
-        <!-- <div class='bg-dark mt-5 text-center border border-dark mx-auto w-75 p-3'>
-            <h5>{{ user.username }}</h5>
-            <p>{{ user.profile.bio }}</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta saepe accusamus tenetur pariatur ab eius nemo veritatis omnis itaque aliquid. Consequatur repellendus, laborum unde. Error quae quia asperiores libero nulla.</p>
-        </div> -->
+    {% endfor %}
+</div>
+<div class='custom_modal'>
+    <div class='custom_modal__exit-btn'><i class="fa fa-times" aria-hidden="true"></i></div>
+    <div class='custom_modal__container'>
     </div>
 </div>
-<script src='{% static "photo_sharing/dynamicLoad.js" %}'></script>
+<script src="{% static 'photo_sharing/modal.js' %}"></script>
+
 {% endblock %}
