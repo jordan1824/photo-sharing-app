@@ -64,7 +64,7 @@ if (document.querySelector(".like-btn")) {
 // End of Like Button Code
 
 
-// Asynchronous Post Load
+// Asynchronous Modal Post Load
 let modal_container = document.querySelector(".custom_modal__container")
 
 let showPost = function(post) {
@@ -172,38 +172,169 @@ let showPost = function(post) {
   sixthDiv.insertAdjacentElement("beforeend", postLikeLink)
   sixthDiv.insertAdjacentElement("beforeend", postDate)
 
+  document.querySelector(".next-btn").setAttribute("data-id", `${post.id}`)
+  document.querySelector(".previous-btn").setAttribute("data-id", `${post.id}`)
+
   modal_container.replaceChild(firstDiv, modal_container.childNodes[0]);
 
   return postLikeLink
 }
 
 
-
 // Modal Section 
+
+let displayPost = function(post) {
+  fetch(`/get-post-details/${post.getAttribute("data-id")}/`)
+  .then(response => response.json())
+  .then(data => {
+    let likeBtn = showPost(data)
+    custom_modal.classList.add("custom_modal--visible")
+    likeBtn.addEventListener("click", () => {
+      event.preventDefault()
+      likeBtnAction(likeBtn)
+    })
+    disableBtnCheck(post)
+    // Just a note: change the classes in your fetch function, such as the post-block, and make it a new css class that has desired properties (height, width, etc.)
+  }).catch(() => {
+    console.log("There was an error fetching the post data.")
+  })
+}
 
 let postImages = document.querySelectorAll(".post-img")
 let custom_modal = document.querySelector(".custom_modal")
 let exitBtn = document.querySelector(".custom_modal__exit-btn")
+let nextBtn = document.querySelector(".next-btn")
+let previousBtn = document.querySelector(".previous-btn")
+
+let disableBtnCheck = function(post) {
+  if (post.getAttribute("data-id") == 1) {
+    nextBtn.disabled = true
+  } else {
+    nextBtn.disabled = false
+  }
+  
+  if (!post.parentElement.previousElementSibling) {
+    previousBtn.disabled = true
+  } else {
+    previousBtn.disabled = false
+  }
+}
 
 postImages.forEach(post => post.addEventListener("click", () => {
-  fetch(`/get-post-details/${post.getAttribute("data-id")}/`)
-  .then(response => response.json())
-  .then(data => {
-    showPost(data)
-    custom_modal.classList.add("custom_modal--visible")
-    // Remember to add in the likeBtn add event listener here
-    // Also, just a note: change the classes in your fetch function, such as the post-block, and make it a new css class that has desired properties (height, width, etc.)
-  }).catch(() => {
-    console.log("There was an error fetching the post data.")
-  })
+  displayPost(post)
 }))
 
 exitBtn.addEventListener("click", () => {
   custom_modal.classList.remove("custom_modal--visible")
 })
 
+custom_modal.addEventListener("click", (event) => {
+  if (event.target.classList.contains("custom_modal")) {
+    custom_modal.classList.remove("custom_modal--visible")
+  }
+})
+
+let nextFunc = function(nextElement) {
+  if (nextElement.childNodes.length > 1) {
+    nextElement = nextElement.childNodes[1]
+  } else {
+    nextElement = nextElement.children[0]
+  }
+  displayPost(nextElement)
+}
+
+nextBtn.addEventListener("click", () => {
+  let id = nextBtn.getAttribute("data-id")
+  let element = document.querySelector(`[data-id="${id}"]`)
+  let nextElement = element.parentElement.nextElementSibling
+  if (!nextElement && id != 1) {
+    asynchronousImageLoad()
+  }
+  setTimeout(() => {  
+    nextElement = element.parentElement.nextElementSibling
+    if (nextElement) {nextFunc(nextElement)}
+  }, 50)
+})
+
+let previousFunc = function(previousElement) {
+  if (previousElement.childNodes.length > 1) {
+    previousElement = previousElement.childNodes[1]
+  } else {
+    previousElement = previousElement.children[0]
+  }
+  displayPost(previousElement)
+}
+
+previousBtn.addEventListener("click", () => {
+  let id = previousBtn.getAttribute("data-id")
+  let element = document.querySelector(`[data-id="${id}"]`)
+  let previousElement = element.parentElement.previousElementSibling
+  if (previousElement) {
+    previousFunc(previousElement)
+  }
+})
+
 document.addEventListener("keyup", (event) => {
   if (event.keyCode == 27 && custom_modal.classList.contains("custom_modal--visible")) {
     custom_modal.classList.remove("custom_modal--visible")
+  }
+})
+
+
+
+/* End of Modal Section */
+
+
+
+/* Asynchronous Global Feed Image/Post Load */
+
+let globalFeed = document.querySelector(".global-feed")
+
+let insertPostIntoFeed = function(post) {
+  let imgDiv = document.createElement("div")
+  imgDiv.className = "post-img-div"
+
+  let img = document.createElement("img")
+  img.setAttribute("src", `/media/${post.image}`)
+  img.setAttribute("alt", "Post Image")
+  img.setAttribute("data-id", `${post.id}`)
+  img.className = "post-img"
+
+  imgDiv.insertAdjacentElement("beforeend", img)
+  globalFeed.insertAdjacentElement("beforeend", imgDiv)
+
+  return img
+}
+
+let start = 9
+let end = 18
+let reachedEnd = false
+let asynchronousImageLoad = function() {
+  fetch(`/dynamic-image-load/?start=${start}&end=${end}`)
+  .then(response => response.json())
+  .then(data => {
+    if (!data.empty) {
+      data.forEach(post => {
+        let newPost = insertPostIntoFeed(post)
+        newPost.addEventListener("click", () => {
+          displayPost(newPost)
+        })
+      })
+      start += 9
+      end += 9
+    } else {
+      reachedEnd = true
+    }
+  }).catch(() => {
+    console.log("There was an error fetching next global feed post.")
+  })
+}
+
+// Detects when user has reached end of page, and sends off request to retrieve more posts
+document.addEventListener("scroll", () => {
+  if (!reachedEnd) {
+    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+      asynchronousImageLoad()
+    }
   }
 })

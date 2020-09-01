@@ -43,7 +43,7 @@ def likes_list(request, pk):
 def global_posts(request):
     return render(request, 'photo_sharing/global.html', {
         "post_likes": list(PostLike.objects.filter(user=request.user).values_list('post_id', flat=True).all()),
-        "all_posts": Post.objects.all().order_by('-date_created')
+        "all_posts": Post.objects.all().order_by('-date_created')[:9]
     })
 
 
@@ -94,6 +94,19 @@ def get_single_post(request, id):
         return JsonResponse(post, safe=False)
     else:
         raise Http404("Post could not be found.")
+
+def dynamic_image_load(request):
+    start = int(request.GET["start"])
+    end = int(request.GET["end"])
+
+    posts = list(Post.objects.all().values('id', 'image').order_by("-date_created"))
+
+    posts = posts[start:end]
+
+    if posts:
+        return JsonResponse(posts, safe=False)
+    else:
+        return JsonResponse({"empty": True}, safe=False)
 
 def create_post(request):
     return render(request, "photo_sharing/create_post.html")
