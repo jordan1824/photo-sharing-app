@@ -63,6 +63,21 @@ if (document.querySelector(".like-btn")) {
 
 // End of Like Button Code
 
+// Start of Read More Button
+
+let revealFullDescription = function(btn) {
+  postDescriptionSpan = btn.parentElement.querySelector(".post-text")
+  postDescriptionSpan.innerHTML = postDescriptionSpan.getAttribute("data-description")
+  btn.remove()
+}
+
+let readMoreBtns = document.querySelectorAll(".post-read-more-btn")
+readMoreBtns.forEach(btn => btn.addEventListener("click", () => {
+  revealFullDescription(btn)
+}))
+
+// End of Read More Button
+
 
 // Asynchronous Modal Post Load
 let modal_container = document.querySelector(".custom_modal__container")
@@ -131,11 +146,20 @@ let showPost = function(post) {
 
   let postDescription = document.createElement("p")
   postDescription.className = "post-p"
+
+  let postDescriptionSpan = document.createElement("span")
   let capitalizedDescription = post.description.charAt(0).toUpperCase() + post.description.slice(1)
+  postDescriptionSpan.setAttribute("data-description", capitalizedDescription)
+  postDescriptionSpan.className = "post-text"
+
+  let readMoreBtn = document.createElement("button")
+  readMoreBtn.className = "post-read-more-btn"
+  readMoreBtn.innerHTML = "Read More"
+
   if (post.description.length > 90) {
-    postDescription.innerHTML = capitalizedDescription.substring(0, 90) + "..."
+    postDescriptionSpan.innerHTML = capitalizedDescription.substring(0, 90) + "..."
   } else {
-    postDescription.innerHTML = capitalizedDescription
+    postDescriptionSpan.innerHTML = capitalizedDescription
   }
 
   let postLikeLink = document.createElement("a")
@@ -169,6 +193,8 @@ let showPost = function(post) {
   pTag.insertAdjacentElement("beforeend", likeCountSpan)
   pTag.insertAdjacentElement("beforeend", likeTitleSpan)
   sixthDiv.insertAdjacentElement("beforeend", postDescription)
+  postDescription.insertAdjacentElement("beforeend", postDescriptionSpan)
+  if (post.description.length > 90) {postDescription.insertAdjacentElement("beforeend", readMoreBtn)}
   sixthDiv.insertAdjacentElement("beforeend", postLikeLink)
   sixthDiv.insertAdjacentElement("beforeend", postDate)
 
@@ -177,7 +203,14 @@ let showPost = function(post) {
 
   modal_container.replaceChild(firstDiv, modal_container.childNodes[0]);
 
-  return postLikeLink
+  postLikeLink.addEventListener("click", () => {
+    event.preventDefault()
+    likeBtnAction(postLikeLink)
+  })
+
+  readMoreBtn.addEventListener("click", () => {
+    revealFullDescription(readMoreBtn)
+  })
 }
 
 
@@ -187,12 +220,8 @@ let displayPost = function(post) {
   fetch(`/get-post-details/${post.getAttribute("data-id")}/`)
   .then(response => response.json())
   .then(data => {
-    let likeBtn = showPost(data)
+    showPost(data)
     custom_modal.classList.add("custom_modal--visible")
-    likeBtn.addEventListener("click", () => {
-      event.preventDefault()
-      likeBtnAction(likeBtn)
-    })
     disableBtnCheck(post)
     // Just a note: change the classes in your fetch function, such as the post-block, and make it a new css class that has desired properties (height, width, etc.)
   }).catch(() => {

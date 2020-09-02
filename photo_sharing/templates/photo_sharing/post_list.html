@@ -36,7 +36,7 @@
                                     <span class='likes-hidden' id="like-title"> Like</span>
                                     {% endif %}
                                     </p></a></div>
-                            <p class='post-p'>{{ post.description|truncatechars:90 }}</p>
+                            <p class='post-p'><span class='post-text' data-description='{{ post.description|capfirst }}'>{{ post.description|capfirst|truncatechars:90 }}</span> {% if post.description|length > 90 %} <button class='post-read-more-btn'>Read More</button> {% endif %} </p>
                             {% if post.id not in post_likes %}
                             <a href="{% url 'post-like' post.id %}" data-id="{{post.id}}" class='like-btn'><p><i class="fa fa-heart" aria-hidden="true"></i>Like Post</p></a>
                             {% else %}

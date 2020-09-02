@@ -64,6 +64,21 @@ if (document.querySelector(".like-btn")) {
 // End of Like Button Code
 
 
+// Start of Read More Button
+
+let revealFullDescription = function(btn) {
+  postDescriptionSpan = btn.parentElement.querySelector(".post-text")
+  postDescriptionSpan.innerHTML = postDescriptionSpan.getAttribute("data-description")
+  btn.remove()
+}
+
+let readMoreBtns = document.querySelectorAll(".post-read-more-btn")
+readMoreBtns.forEach(btn => btn.addEventListener("click", () => {
+  revealFullDescription(btn)
+}))
+
+// End of Read More Button
+
 // Asynchronous Post Load
 
 let postContainer = document.querySelector("#global-posts")
@@ -132,11 +147,20 @@ let createPost = function(post) {
 
   let postDescription = document.createElement("p")
   postDescription.className = "post-p"
+
+  let postDescriptionSpan = document.createElement("span")
   let capitalizedDescription = post.description.charAt(0).toUpperCase() + post.description.slice(1)
+  postDescriptionSpan.setAttribute("data-description", capitalizedDescription)
+  postDescriptionSpan.className = "post-text"
+
+  let readMoreBtn = document.createElement("button")
+  readMoreBtn.className = "post-read-more-btn"
+  readMoreBtn.innerHTML = "Read More"
+
   if (post.description.length > 90) {
-    postDescription.innerHTML = capitalizedDescription.substring(0, 90) + "..."
+    postDescriptionSpan.innerHTML = capitalizedDescription.substring(0, 90) + "..."
   } else {
-    postDescription.innerHTML = capitalizedDescription
+    postDescriptionSpan.innerHTML = capitalizedDescription
   }
 
   let postLikeLink = document.createElement("a")
@@ -170,12 +194,21 @@ let createPost = function(post) {
   pTag.insertAdjacentElement("beforeend", likeCountSpan)
   pTag.insertAdjacentElement("beforeend", likeTitleSpan)
   sixthDiv.insertAdjacentElement("beforeend", postDescription)
+  postDescription.insertAdjacentElement("beforeend", postDescriptionSpan)
+  if (post.description.length > 90) {postDescription.insertAdjacentElement("beforeend", readMoreBtn)}
   sixthDiv.insertAdjacentElement("beforeend", postLikeLink)
   sixthDiv.insertAdjacentElement("beforeend", postDate)
 
   postContainer.insertAdjacentElement("beforeend", firstDiv)
 
-  return postLikeLink
+  postLikeLink.addEventListener("click", (event) => {
+    event.preventDefault()
+    likeBtnAction(postLikeLink)
+  })
+  
+  readMoreBtn.addEventListener("click", () => {
+    revealFullDescription(readMoreBtn)
+  })
 }
 
 
@@ -211,11 +244,7 @@ window.addEventListener("scroll", (event) => {
       .then(data => {
         if (!data.empty) {
           data.forEach(post => {
-            let likeBtn = createPost(post)
-            likeBtn.addEventListener("click", (event) => {
-              event.preventDefault()
-              likeBtnAction(likeBtn)
-            })
+            createPost(post)
           })
           start += 10
           end += 10

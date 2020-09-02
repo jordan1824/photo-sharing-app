@@ -79,6 +79,21 @@ main {
     padding-right: 120px;
     width: 100%;
     min-height: 68px;
+    display: inline-block;
+}
+.post-read-more-btn {
+    display: inline;
+    margin-left: 1px;
+    background: none;
+    outline: none;
+    border: none;
+    color: darkgrey;
+}
+.post-read-more-btn:hover {
+    text-decoration: underline;
+}
+.post-read-more-btn:focus {
+    outline: none;
 }
 .home .post-date {
     top: 40px;
