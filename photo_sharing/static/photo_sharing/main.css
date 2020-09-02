@@ -77,29 +77,35 @@ main {
     margin: 5px 5px 5px 15px;
     position: relative;
     padding-right: 120px;
+    padding-bottom: 5px;
     width: 100%;
     min-height: 68px;
     display: inline-block;
+    max-height: 150px;
+    overflow-y: scroll;
 }
-.post-read-more-btn {
+.post-text {
+    margin-right: 8px;
+}
+.post-read-more-btn, .view-post-btn {
     display: inline;
-    margin-left: 1px;
+    padding: 0;
     background: none;
     outline: none;
     border: none;
     color: darkgrey;
 }
-.post-read-more-btn:hover {
+.post-read-more-btn:hover, .view-post-btn:hover {
     text-decoration: underline;
 }
-.post-read-more-btn:focus {
+.post-read-more-btn:focus, .view-post-btn:focus {
     outline: none;
 }
 .home .post-date {
-    top: 40px;
+    top: 37px;
     right: 0;
     padding: 6px 0;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     background: #262B2F;
     text-align: center;
     border: 1px solid white;
@@ -302,6 +308,12 @@ main {
     right: 15px;
     padding: 4px 10px;
 }
+.modify-post-btn {
+    position: absolute;
+    top: 60px;
+    right: 15px;
+    padding: 4px 7px 4px 6px;
+}
 .following {
     display: inline-block;
     border-left: 1px solid lightgrey;
@@ -333,6 +345,9 @@ main {
     box-sizing: border-box;
     margin: 20px;
     box-shadow: 5px 5px 7px grey;
+}
+.overflow-hidden {
+    overflow: hidden;
 }
 .post-image {
     width: 100%;
@@ -370,6 +385,58 @@ main {
     color: #262B2F;
     padding: 4px 10px;
     font-size: 12px;
+}
+.post-options {
+    position: absolute;
+    top: 4px;
+    left: 5px;
+}
+.delete-post-btn, .edit-post-btn {
+    font-size: 1.4rem;
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transform: translateY(-150%);
+    transition: transform 0.8s ease-out;
+    color: white;
+    text-shadow: -1px -1px 0 grey, 1px -1px 0 grey, -1px 1px 0 grey, 1px 1px 0 grey;
+}
+.delete-post-btn {
+    margin-left: 4px;
+    font-size: 1.5rem;
+}
+.edit-post-btn {
+    position: relative;
+    top: 1px;
+}
+.edit-post-btn:hover {
+    color: #007bff;
+    transition: color 0.3s, text-shadow 0.3s;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+}
+.delete-post-btn:hover {
+    color: red;
+    transition: color 0.3s, text-shadow 0.3s;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+}
+.delete-post-btn:focus, .edit-post-btn:focus {
+    outline: none;
+}
+.btn-visible {
+    transform: translateY(0%);
+}
+.empty-profile-posts {
+    background: #262B2F;
+    color: white;
+    padding: 10px 20px;
+}
+.fade-away-animation {
+    animation: fadeAway 1s ease-in-out forwards;
+}
+@keyframes fadeAway {
+    0% {opacity: 1}
+    100% {opacity: 0}
 }
 
 /* ==== END OF PROFILE ==== */

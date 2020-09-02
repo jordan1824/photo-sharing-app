@@ -61,9 +61,6 @@ if (document.querySelector(".like-btn")) {
 }))
 }
 
-// End of Like Button Code
-
-
 // Start of Read More Button
 
 let revealFullDescription = function(btn) {
@@ -76,8 +73,6 @@ let readMoreBtns = document.querySelectorAll(".post-read-more-btn")
 readMoreBtns.forEach(btn => btn.addEventListener("click", () => {
   revealFullDescription(btn)
 }))
-
-// End of Read More Button
 
 // Asynchronous Post Load
 
@@ -212,30 +207,11 @@ let createPost = function(post) {
 }
 
 
-// Get rid of this now. This automatically loads in all the posts at once, which you don't need anymore
-// fetch("/dynamic-load/")
-//   .then(response => response.json())
-//   .then(data => {
-//     data.forEach(post => {
-//       let likeBtn = createPost(post)
-//       likeBtn.addEventListener("click", (event) => {
-//         event.preventDefault()
-//         likeBtnAction(likeBtn)
-//       })
-//     })
-//   }).catch(() => {
-//     console.log("There was an error running the fetch.")
-//   })
-
-
-
-// Make sure that you start requesting at the 10th post onwards
-// Because I automatically load the first 10 in with the base HTML / django
-// You will have repeats if you don't start from the 10th one (or 11th, you will need to experiment)
 let start = 10
 let end = 20
 let reachedEnd = false
 
+// Loads in posts on scroll
 window.addEventListener("scroll", (event) => {
   if (!reachedEnd) {
     if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
@@ -257,6 +233,3 @@ window.addEventListener("scroll", (event) => {
     }
   }
 })
-
-
-// End of Asynchronous Post Load

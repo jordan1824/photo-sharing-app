@@ -309,8 +309,6 @@ document.addEventListener("keyup", (event) => {
   }
 })
 
-
-
 /* End of Modal Section */
 
 

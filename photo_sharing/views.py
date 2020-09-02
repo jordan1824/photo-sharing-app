@@ -112,4 +112,28 @@ def create_post(request):
     return render(request, "photo_sharing/create_post.html")
 
 def update_post(request, id):
-    return render(request, "photo_sharing/update_post.html")
+    if request.method == "POST":
+        post = Post.objects.get(id=id)
+        if not(post):
+            raise Http404
+        data = json.loads(request.body)
+        description = data['description']
+        for letter in "<>":
+            if letter in description:
+                raise Http404()
+        if post.user == request.user:
+            post.description = description
+            post.save()
+            return HttpResponse("post updated")
+    raise Http404()
+
+def delete_post(request, id):
+    if request.method == "POST":
+        post = Post.objects.get(id=id)
+        if not(post):
+            raise Http404()
+        if post.user == request.user:
+            post.delete()
+            print("deleted")
+            return HttpResponse("post deleted")
+    raise Http404()
