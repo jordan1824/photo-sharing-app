@@ -1,17 +1,32 @@
-// Like Button Code
 
-let updateLikesTitle = function(likesValue, btn) {
-  let likeTitleSpan = btn.parentElement.querySelector("#like-title")
-  if (likesValue <= 0) {
-      likeTitleSpan.classList.add("likes-hidden")
-  } else if (likesValue == 1) {
-      if (likeTitleSpan.classList.contains("likes-hidden")) {
-          likeTitleSpan.classList.remove("likes-hidden")
+/* ==== Start of Like Button Code ==== */
+
+// Adds event listener to like buttons already loaded on the page
+if (document.querySelector(".like-btn")) {
+  let likeBtns = document.querySelectorAll(".like-btn")
+  likeBtns.forEach(btn => btn.addEventListener("click", (event) => {
+      event.preventDefault()
+      likeBtnAction(btn)
+}))
+}
+
+let likeBtnAction = function(btn) {
+  let id = btn.getAttribute("data-id")
+  fetch(`/post-like/${id}/`)
+  .then(response => response.text())
+  .then(text => {
+      if (text == "Added Like") {
+          btn.classList.add("liked")
+          btn.innerHTML = `<i class="fa fa-heart" aria-hidden="true"></i>Liked Post`
+          updateLikesCount("add", btn)
+      } else {
+          btn.classList.remove("liked")
+          btn.innerHTML = `<i class="fa fa-heart" aria-hidden="true"></i>Like Post`
+          updateLikesCount("subtract", btn)
       }
-      likeTitleSpan.innerHTML = " Like"
-  } else {
-      likeTitleSpan.innerHTML = " Likes"
-  }
+  }).catch(function() {
+      console.log("There was an error.")
+  })
 }
 
 let updateLikesCount = function(action, btn) {
@@ -34,36 +49,33 @@ let updateLikesCount = function(action, btn) {
   }
 }
 
-let likeBtnAction = function(btn) {
-  let id = btn.getAttribute("data-id")
-  fetch(`/post-like/${id}/`)
-  .then(response => response.text())
-  .then(text => {
-      if (text == "Added Like") {
-          btn.classList.add("liked")
-          btn.innerHTML = `<i class="fa fa-heart" aria-hidden="true"></i>Liked Post`
-          updateLikesCount("add", btn)
-      } else {
-          btn.classList.remove("liked")
-          btn.innerHTML = `<i class="fa fa-heart" aria-hidden="true"></i>Like Post`
-          updateLikesCount("subtract", btn)
+let updateLikesTitle = function(likesValue, btn) {
+  let likeTitleSpan = btn.parentElement.querySelector("#like-title")
+  if (likesValue <= 0) {
+      likeTitleSpan.classList.add("likes-hidden")
+  } else if (likesValue == 1) {
+      if (likeTitleSpan.classList.contains("likes-hidden")) {
+          likeTitleSpan.classList.remove("likes-hidden")
       }
-  }).catch(function() {
-      console.log("There was an error.")
-  })
+      likeTitleSpan.innerHTML = " Like"
+  } else {
+      likeTitleSpan.innerHTML = " Likes"
+  }
 }
 
-if (document.querySelector(".like-btn")) {
-  let likeBtns = document.querySelectorAll(".like-btn")
-  likeBtns.forEach(btn => btn.addEventListener("click", (event) => {
-      event.preventDefault()
-      likeBtnAction(btn)
-}))
+/* ==== End of Like Button Code ==== */
+
+
+
+/* ==== Start of Read More Button ==== */
+
+// Adds event listener to read more buttons already loaded on the page
+if (document.querySelector(".post-read-more-btn")) {
+  let readMoreBtns = document.querySelectorAll(".post-read-more-btn")
+  readMoreBtns.forEach(btn => btn.addEventListener("click", () => {
+    revealFullDescription(btn)
+  }))
 }
-
-// End of Like Button Code
-
-// Start of Read More Button
 
 let revealFullDescription = function(btn) {
   postDescriptionSpan = btn.parentElement.querySelector(".post-text")
@@ -71,18 +83,35 @@ let revealFullDescription = function(btn) {
   btn.remove()
 }
 
-let readMoreBtns = document.querySelectorAll(".post-read-more-btn")
-readMoreBtns.forEach(btn => btn.addEventListener("click", () => {
-  revealFullDescription(btn)
-}))
-
-// End of Read More Button
+/* ==== End of Read More Button Code ==== */
 
 
-// Asynchronous Modal Post Load
+
+/* ==== Start of Modal / Post Popup Code ==== */
+
+// Displays modal / post popup
+let displayPost = function(post) {
+  fetch(`/get-post-details/${post.getAttribute("data-id")}/`)
+  .then(response => response.json())
+  .then(data => {
+    // Adds new post to the modal
+    showPost(data)
+    // Makes modal visible
+    custom_modal.classList.add("custom_modal--visible")
+    // Disables buttons if needed (if post is first or last)
+    disableBtnCheck(post)
+    // Just a note: change the classes in your fetch function, such as the post-block, and make it a new css class that has desired properties (height, width, etc.)
+  }).catch(() => {
+    console.log("There was an error fetching the post data.")
+  })
+}
+
+// Creates post element, and adds event listeners to post buttons
 let modal_container = document.querySelector(".custom_modal__container")
-
 let showPost = function(post) {
+
+  /* Start of post element creation */
+
   let firstDiv = document.createElement("div")
   firstDiv.className = 'row no-gutters justify-content-center home'
 
@@ -198,170 +227,366 @@ let showPost = function(post) {
   sixthDiv.insertAdjacentElement("beforeend", postLikeLink)
   sixthDiv.insertAdjacentElement("beforeend", postDate)
 
+  /* End of post element creation */
+
+  // Updates next & previous button data so the buttons will work properly
   document.querySelector(".next-btn").setAttribute("data-id", `${post.id}`)
   document.querySelector(".previous-btn").setAttribute("data-id", `${post.id}`)
 
+  // Replaces previous post with the new post that was just created
   modal_container.replaceChild(firstDiv, modal_container.childNodes[0]);
 
+  // Adds on event listeners to buttons
   postLikeLink.addEventListener("click", () => {
     event.preventDefault()
     likeBtnAction(postLikeLink)
   })
-
   readMoreBtn.addEventListener("click", () => {
     revealFullDescription(readMoreBtn)
   })
 }
 
+// Disables next & previous buttons when needed
+let disableBtnCheck
+// Global Feed Page:
+if (document.querySelector(".global-feed")) {
+  disableBtnCheck = function(post) {
+    if (post.getAttribute("data-id") == 1) {
+      nextBtn.disabled = true
+    } else {
+      nextBtn.disabled = false
+    }
 
-// Modal Section 
-
-let displayPost = function(post) {
-  fetch(`/get-post-details/${post.getAttribute("data-id")}/`)
-  .then(response => response.json())
-  .then(data => {
-    showPost(data)
-    custom_modal.classList.add("custom_modal--visible")
-    disableBtnCheck(post)
-    // Just a note: change the classes in your fetch function, such as the post-block, and make it a new css class that has desired properties (height, width, etc.)
-  }).catch(() => {
-    console.log("There was an error fetching the post data.")
-  })
+    if (!post.parentElement.previousElementSibling) {
+      previousBtn.disabled = true
+    } else {
+      previousBtn.disabled = false
+    }
+  }
+}
+// Profile Page:
+if (document.querySelector(".profile-block")) {
+  disableBtnCheck = function(post) {
+    if (!post.nextElementSibling) {
+      nextBtn.disabled = true
+    } else {
+      nextBtn.disabled = false
+    }
+    
+    if (!post.previousElementSibling) {
+      previousBtn.disabled = true
+    } else {
+      previousBtn.disabled = false
+    }
+  }
 }
 
-let postImages = document.querySelectorAll(".post-img")
+// General configuration for modal
 let custom_modal = document.querySelector(".custom_modal")
 let exitBtn = document.querySelector(".custom_modal__exit-btn")
+// NextBtn & PreviousBtn config can be found in the related page below
 let nextBtn = document.querySelector(".next-btn")
 let previousBtn = document.querySelector(".previous-btn")
-
-let disableBtnCheck = function(post) {
-  if (post.getAttribute("data-id") == 1) {
-    nextBtn.disabled = true
-  } else {
-    nextBtn.disabled = false
-  }
-  
-  if (!post.parentElement.previousElementSibling) {
-    previousBtn.disabled = true
-  } else {
-    previousBtn.disabled = false
-  }
-}
-
-postImages.forEach(post => post.addEventListener("click", () => {
-  displayPost(post)
-}))
-
+// Exit button configuration
 exitBtn.addEventListener("click", () => {
   custom_modal.classList.remove("custom_modal--visible")
 })
-
+// Closes modal when anywhere but post is clicked (while modal is open)
 custom_modal.addEventListener("click", (event) => {
   if (event.target.classList.contains("custom_modal")) {
     custom_modal.classList.remove("custom_modal--visible")
   }
 })
-
-let nextFunc = function(nextElement) {
-  if (nextElement.childNodes.length > 1) {
-    nextElement = nextElement.childNodes[1]
-  } else {
-    nextElement = nextElement.children[0]
-  }
-  displayPost(nextElement)
-}
-
-nextBtn.addEventListener("click", () => {
-  let id = nextBtn.getAttribute("data-id")
-  let element = document.querySelector(`[data-id="${id}"]`)
-  let nextElement = element.parentElement.nextElementSibling
-  if (!nextElement && id != 1) {
-    asynchronousImageLoad()
-  }
-  setTimeout(() => {  
-    nextElement = element.parentElement.nextElementSibling
-    if (nextElement) {nextFunc(nextElement)}
-  }, 50)
-})
-
-let previousFunc = function(previousElement) {
-  if (previousElement.childNodes.length > 1) {
-    previousElement = previousElement.childNodes[1]
-  } else {
-    previousElement = previousElement.children[0]
-  }
-  displayPost(previousElement)
-}
-
-previousBtn.addEventListener("click", () => {
-  let id = previousBtn.getAttribute("data-id")
-  let element = document.querySelector(`[data-id="${id}"]`)
-  let previousElement = element.parentElement.previousElementSibling
-  if (previousElement) {
-    previousFunc(previousElement)
-  }
-})
-
+// Closes modal when exit key is pressed
 document.addEventListener("keyup", (event) => {
   if (event.keyCode == 27 && custom_modal.classList.contains("custom_modal--visible")) {
     custom_modal.classList.remove("custom_modal--visible")
   }
 })
 
-/* End of Modal Section */
+/* ==== End of Modal / Post Popup Code ==== */
 
 
 
-/* Asynchronous Global Feed Image/Post Load */
 
-let globalFeed = document.querySelector(".global-feed")
+/* ==== Start of Global Feed Page Specific Code ==== */
 
-let insertPostIntoFeed = function(post) {
-  let imgDiv = document.createElement("div")
-  imgDiv.className = "post-img-div"
+if (document.querySelector(".global-feed")) {
+  
+  /* Start of Infinite Image Load */
 
-  let img = document.createElement("img")
-  img.setAttribute("src", `/media/${post.image}`)
-  img.setAttribute("alt", "Post Image")
-  img.setAttribute("data-id", `${post.id}`)
-  img.className = "post-img"
-
-  imgDiv.insertAdjacentElement("beforeend", img)
-  globalFeed.insertAdjacentElement("beforeend", imgDiv)
-
-  return img
-}
-
-let start = 9
-let end = 18
-let reachedEnd = false
-let asynchronousImageLoad = function() {
-  fetch(`/dynamic-image-load/?start=${start}&end=${end}`)
-  .then(response => response.json())
-  .then(data => {
-    if (!data.empty) {
-      data.forEach(post => {
-        let newPost = insertPostIntoFeed(post)
-        newPost.addEventListener("click", () => {
-          displayPost(newPost)
-        })
-      })
-      start += 9
-      end += 9
-    } else {
-      reachedEnd = true
+  let reachedEnd = false
+  // Detects when user has reached end of page, and sends off request to retrieve more posts
+   document.addEventListener("scroll", () => {
+    if (!reachedEnd) {
+      if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+        asynchronousImageLoad()
+      }
     }
-  }).catch(() => {
-    console.log("There was an error fetching next global feed post.")
   })
-}
 
-// Detects when user has reached end of page, and sends off request to retrieve more posts
-document.addEventListener("scroll", () => {
-  if (!reachedEnd) {
-    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+  let start = 9
+  let end = 18
+  // Sends off request to get more posts
+  let asynchronousImageLoad = function() {
+    fetch(`/dynamic-image-load/?start=${start}&end=${end}`)
+    .then(response => response.json())
+    .then(data => {
+      // If the response contains posts...
+      if (!data.empty) {
+        // Loops over each new post, and inserts it into feed
+        data.forEach(post => {
+          insertPostIntoFeed(post)
+        })
+        // Increases start & end, so when the user reaches the end of page again
+        // Then the next bunch of posts will be sent back
+        start += 9
+        end += 9
+      } else {
+        reachedEnd = true
+      }
+    }).catch(() => {
+      console.log("There was an error fetching next global feed post.")
+    })
+  }
+
+  let globalFeed = document.querySelector(".global-feed")
+  // Creates the new image / post element, and appends it to feed. Also adds on event listener to new image.
+  let insertPostIntoFeed = function(post) {
+    let imgDiv = document.createElement("div")
+    imgDiv.className = "post-img-div"
+
+    let img = document.createElement("img")
+    img.setAttribute("src", `/media/${post.image}`)
+    img.setAttribute("alt", "Post Image")
+    img.setAttribute("data-id", `${post.id}`)
+    img.className = "post-img"
+
+    imgDiv.insertAdjacentElement("beforeend", img)
+    globalFeed.insertAdjacentElement("beforeend", imgDiv)
+
+    img.addEventListener("click", () => {
+      displayPost(img)
+    })
+  }
+
+  /* End of Infinite Image Load */
+
+  /* Start of Modal Related Code */
+
+  // Adds on event listener to already loaded posts / images
+  // Event listener watches for clicks to display modal
+  let postImages = document.querySelectorAll(".post-img")
+  postImages.forEach(post => post.addEventListener("click", () => {
+    displayPost(post)
+  }))
+
+  // Watches for click on next button
+  nextBtn.addEventListener("click", () => {
+    let id = nextBtn.getAttribute("data-id")
+    // Gets current element that is being displayed in modal
+    let element = document.querySelector(`[data-id="${id}"]`)
+    // Gets next element from global feed
+    let nextElement = element.parentElement.nextElementSibling
+    // Sends off request to load more posts if not a next element and if user hasn't reached first post
+    if (!nextElement && id != 1) {
       asynchronousImageLoad()
     }
+    // Timeout to allow all posts to load in
+    setTimeout(() => {  
+      // Tries to get next element again after asynchronous load
+      nextElement = element.parentElement.nextElementSibling
+      if (nextElement) {nextFunc(nextElement)}
+    }, 50)
+  })
+  
+  // Gets the image element & displays it in modal
+  let nextFunc = function(nextElement) {
+    if (nextElement.childNodes.length > 1) {
+      nextElement = nextElement.childNodes[1]
+    } else {
+      nextElement = nextElement.children[0]
+    }
+    displayPost(nextElement)
   }
-})
+
+  // Watches for clicks on previous button
+  previousBtn.addEventListener("click", () => {
+    let id = previousBtn.getAttribute("data-id")
+    // Gets current element that is being displayed in modal
+    let element = document.querySelector(`[data-id="${id}"]`)
+    // Gets next element from global feed
+    let previousElement = element.parentElement.previousElementSibling
+    if (previousElement) {
+      previousFunc(previousElement)
+    }
+  })
+  
+  // Gets the image element & displays it in modal
+  let previousFunc = function(previousElement) {
+    if (previousElement.childNodes.length > 1) {
+      previousElement = previousElement.childNodes[1]
+    } else {
+      previousElement = previousElement.children[0]
+    }
+    displayPost(previousElement)
+  }
+  
+  /* End of Modal Related Code */
+}
+
+/* ==== End of Global Feed Page Code ==== */
+
+
+
+
+/* ==== Start of Profile Page Code ==== */
+
+if (document.querySelector(".profile-block")) {
+  let deleteBtns = document.querySelectorAll(".delete-post-btn")
+  let editBtns = document.querySelectorAll(".edit-post-btn")
+  let modifyPostBtn = document.querySelector(".modify-post-btn")
+
+  // Adds click event listener that will reveal the edit & delete buttons for each post
+  modifyPostBtn.addEventListener("click", () => {
+    if (!document.querySelector(".btn-visible")) {
+      deleteBtns.forEach(btn => btn.classList.add("btn-visible"))
+      editBtns.forEach(btn => btn.classList.add("btn-visible"))
+    } else {
+      deleteBtns.forEach(btn => btn.classList.remove("btn-visible"))
+      editBtns.forEach(btn => btn.classList.remove("btn-visible"))
+    }
+  })
+
+  // Fetch POST function that grabs cookie
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+
+  // Delete Btn Action
+  deleteBtns.forEach(btn => btn.addEventListener("click", () => {
+    let id = btn.getAttribute("data-id")
+    if (confirm("Are you sure you want to delete this post?")) {
+      // Sends off post request if user confirmed deletion
+      fetch(`/delete-post/${id}/`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          "Accept": "application/json",
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.text())
+      .then(text => {
+        if (text == "post deleted") {
+          let currentPost = btn.parentElement.parentElement
+          // Removes the post from frontend
+          currentPost.classList.add("fade-away-animation")
+          currentPost.addEventListener("animationend", () => {
+            btn.parentElement.parentElement.remove()
+            // Checks to see if the user has any posts left
+            if (!document.querySelector(".post-block")) {
+              // Adds in empty post div if not
+              document.querySelector(".row").innerHTML = `<div class='empty-profile-posts'>You do not have any posts.</div>`
+            }
+          })
+        }
+      }).catch(() => {
+        console.log("There was an error deleting the post")
+      })
+    }
+  }))
+
+  // Edit Btn Action
+  editBtns.forEach(btn => btn.addEventListener("click", () => {
+    let id = btn.getAttribute("data-id")
+    let description = btn.getAttribute("data-description")
+    let result = prompt("Edit your post", description)
+    if (result) {
+      // Sends off post request if user provided new text
+      fetch(`/update-post/${id}/`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          "Accept": "application/json",
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({description: result})
+      })
+      .then(response => response.text())
+      .then(text => {
+        if (text == "post updated") {
+          // Adds capital letter to beginning of description
+          result = result.charAt(0).toUpperCase() + result.slice(1)
+          // Adds new description to data-description, so it will be used if edit is clicked again
+          btn.setAttribute("data-description", result)
+          let descriptionSpan = btn.parentElement.parentElement.querySelector(".post-text")
+          // Deals with formatting the post description
+          if (result.length > 70) {
+            descriptionSpan.innerHTML = result.substring(0, 69) + "..."
+          } else if (result.length < 35) {
+            descriptionSpan.innerHTML = result + "<br>"
+          } else {
+            descriptionSpan.innerHTML = result
+          }
+        }
+      }).catch(() => {
+        console.log("There was an error updating the post")
+      })
+    }
+  }))
+
+  /* Start of Modal Related Code */
+
+  let viewPostBtns = document.querySelectorAll(".view-post-btn")
+  // Adds on click event listener to all view post buttons that will display modal
+  viewPostBtns.forEach(btn => btn.addEventListener("click", () => {
+    // Gets post object in relation to each btn
+    let post = btn.parentElement.parentElement.parentElement.parentElement
+    displayPost(post)
+  }))
+
+  // Adds on event listener to next button
+  nextBtn.addEventListener("click", () => {
+    let id = nextBtn.getAttribute("data-id")
+    // Gets element that is currently displayed in modal
+    let element = document.querySelector(`[data-id="${id}"]`)
+    // Gets next element
+    let nextElement = element.nextElementSibling
+    // Replaces the current element with the next element
+    if (nextElement) {
+      displayPost(nextElement)
+    }
+  })
+
+  // Adds on event listener to previous button
+  previousBtn.addEventListener("click", () => {
+    let id = previousBtn.getAttribute("data-id")
+    // Gets element that is currently displayed in modal
+    let element = document.querySelector(`[data-id="${id}"]`)
+    // Gets previous element
+    let previousElement = element.previousElementSibling
+    // Replaces the current element with the next element
+    if (previousElement) {
+      displayPost(previousElement)
+    }
+  })
+
+  /* End  of Modal Related Code */
+}
+
+/* ==== End of Profile Page Code ==== */
