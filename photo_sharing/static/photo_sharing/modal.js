@@ -443,42 +443,26 @@ if (document.querySelector(".global-feed")) {
 /* ==== Start of Profile Page Code ==== */
 
 if (document.querySelector(".profile-block")) {
-  let deleteBtns = document.querySelectorAll(".delete-post-btn")
-  let editBtns = document.querySelectorAll(".edit-post-btn")
-  let modifyPostBtn = document.querySelector(".modify-post-btn")
+  
+  /* Start of Edit/Delete Modal Related Code */
 
-  // Adds click event listener that will reveal the edit & delete buttons for each post
-  modifyPostBtn.addEventListener("click", () => {
-    if (!document.querySelector(".btn-visible")) {
-      deleteBtns.forEach(btn => btn.classList.add("btn-visible"))
-      editBtns.forEach(btn => btn.classList.add("btn-visible"))
-    } else {
-      deleteBtns.forEach(btn => btn.classList.remove("btn-visible"))
-      editBtns.forEach(btn => btn.classList.remove("btn-visible"))
-    }
-  })
+  if (document.querySelector(".modify-post-btn")) {
+    let deleteBtns = document.querySelectorAll(".delete-post-btn")
+    let editBtns = document.querySelectorAll(".edit-post-btn")
+    let modifyPostBtn = document.querySelector(".modify-post-btn")
+    let editModal = document.querySelector(".edit-modal")
+    let deleteModal = document.querySelector(".delete-modal")
+    let modalExitBtns = document.querySelectorAll(".profile_modal__exit-btn")
+    let modalDeleteBtn = document.querySelector(".profile_modal__button--delete")
+    let modalUpdateBtn = document.querySelector(".profile_modal__update-btn")
+    let modalUpdateTextArea = document.querySelector(".profile_modal__text")
+    let modalUpdateCancelBtn = document.querySelector(".profile_modal__cancel-btn")
+    let modalCancelBtn = document.querySelector(".profile_modal__button--cancel")
 
-  // Fetch POST function that grabs cookie
-  function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-  }
-
-  // Delete Btn Action
-  deleteBtns.forEach(btn => btn.addEventListener("click", () => {
-    let id = btn.getAttribute("data-id")
-    if (confirm("Are you sure you want to delete this post?")) {
+    // Modal Delete Button Action
+    modalDeleteBtn.addEventListener("click", () => {
+      let id = modalDeleteBtn.getAttribute("data-id")
+      let post = document.querySelector(`[data-id="${id}"]`)
       // Sends off post request if user confirmed deletion
       fetch(`/delete-post/${id}/`, {
         method: 'POST',
@@ -492,11 +476,12 @@ if (document.querySelector(".profile-block")) {
       .then(response => response.text())
       .then(text => {
         if (text == "post deleted") {
-          let currentPost = btn.parentElement.parentElement
+          deleteModal.classList.remove("profile_modal--visible")
+          let currentPost = post
           // Removes the post from frontend
           currentPost.classList.add("fade-away-animation")
           currentPost.addEventListener("animationend", () => {
-            btn.parentElement.parentElement.remove()
+            currentPost.remove()
             // Checks to see if the user has any posts left
             if (!document.querySelector(".post-block")) {
               // Adds in empty post div if not
@@ -507,50 +492,116 @@ if (document.querySelector(".profile-block")) {
       }).catch(() => {
         console.log("There was an error deleting the post")
       })
-    }
-  }))
+    })
 
-  // Edit Btn Action
-  editBtns.forEach(btn => btn.addEventListener("click", () => {
-    let id = btn.getAttribute("data-id")
-    let description = btn.getAttribute("data-description")
-    let result = prompt("Edit your post", description)
-    if (result) {
-      // Sends off post request if user provided new text
-      fetch(`/update-post/${id}/`, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-          "Accept": "application/json",
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({description: result})
-      })
-      .then(response => response.text())
-      .then(text => {
-        if (text == "post updated") {
-          // Adds capital letter to beginning of description
-          result = result.charAt(0).toUpperCase() + result.slice(1)
-          // Adds new description to data-description, so it will be used if edit is clicked again
-          btn.setAttribute("data-description", result)
-          let descriptionSpan = btn.parentElement.parentElement.querySelector(".post-text")
-          // Deals with formatting the post description
-          if (result.length > 70) {
-            descriptionSpan.innerHTML = result.substring(0, 69) + "..."
-          } else if (result.length < 35) {
-            descriptionSpan.innerHTML = result + "<br>"
-          } else {
-            descriptionSpan.innerHTML = result
+    // Modal Update Button Action
+    modalUpdateBtn.addEventListener("click", () => {
+      let id = modalUpdateBtn.getAttribute('data-id')
+      let result = modalUpdateTextArea.value
+      let postEditBtn = document.querySelector(`[data-id="${id}"]`).querySelector(".edit-post-btn")
+      if (result) {
+        // Sends off post request if user provided new text
+        fetch(`/update-post/${id}/`, {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Accept": "application/json",
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({description: result})
+        })
+        .then(response => response.text())
+        .then(text => {
+          if (text == "post updated") {
+            // Adds capital letter to beginning of description
+            result = result.charAt(0).toUpperCase() + result.slice(1)
+            // Adds new description to data-description, so it will be used if edit is clicked again
+            postEditBtn.setAttribute("data-description", result)
+            let descriptionSpan = postEditBtn.parentElement.parentElement.querySelector(".post-text")
+            // Deals with formatting the post description
+            if (result.length > 70) {
+              descriptionSpan.innerHTML = result.substring(0, 69) + "..."
+            } else if (result.length < 35) {
+              descriptionSpan.innerHTML = result + "<br>"
+            } else {
+              descriptionSpan.innerHTML = result
+            }
+            editModal.classList.remove("profile_modal--visible")
           }
-        }
-      }).catch(() => {
-        console.log("There was an error updating the post")
-      })
-    }
-  }))
+        }).catch(() => {
+          console.log("There was an error updating the post")
+        })
+      }
+    })
 
-  /* Start of Modal Related Code */
+    // Modal Exit Button Action
+    modalExitBtns.forEach(btn => btn.addEventListener("click", () => {
+      let openedModal = document.querySelector(".profile_modal--visible")
+      openedModal.classList.remove("profile_modal--visible")
+    }))
+
+    // Delete Modal Cancel Button Action
+    modalCancelBtn.addEventListener("click", () => {
+      let openedModal = document.querySelector(".profile_modal--visible")
+      openedModal.classList.remove("profile_modal--visible")
+    })
+
+    // Edit Modal Cancel Button Action
+    modalUpdateCancelBtn.addEventListener("click", () => {
+      let openedModal = document.querySelector(".profile_modal--visible")
+      openedModal.classList.remove("profile_modal--visible")
+    })
+
+    // Adds click event listener that will reveal the edit & delete buttons for each post
+    modifyPostBtn.addEventListener("click", () => {
+      if (!document.querySelector(".btn-visible")) {
+        deleteBtns.forEach(btn => btn.classList.add("btn-visible"))
+        editBtns.forEach(btn => btn.classList.add("btn-visible"))
+      } else {
+        deleteBtns.forEach(btn => btn.classList.remove("btn-visible"))
+        editBtns.forEach(btn => btn.classList.remove("btn-visible"))
+      }
+    })
+
+    // Fetch POST function that grabs cookie
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+
+    // Post Delete Btn Action (opens appropriate modal & transfers post information)
+    deleteBtns.forEach(btn => btn.addEventListener("click", () => {
+      let id = btn.getAttribute("data-id")
+      modalDeleteBtn.setAttribute("data-id", id)
+      deleteModal.classList.add("profile_modal--visible")
+    }))
+
+    // Post Edit Btn Action (opens appropriate modal & transfers post information)
+    editBtns.forEach(btn => btn.addEventListener("click", () => {
+      let id = btn.getAttribute("data-id")
+      modalUpdateBtn.setAttribute("data-id", id)
+      let description = btn.getAttribute("data-description")
+      modalUpdateTextArea.value = description
+      editModal.classList.add("profile_modal--visible")
+      modalUpdateTextArea.focus()
+    }))
+  }
+
+  /* End of Edit/Delete Modal Related Code */
+
+  /* Start of Post Modal Related Code */
 
   let viewPostBtns = document.querySelectorAll(".view-post-btn")
   // Adds on click event listener to all view post buttons that will display modal
@@ -586,7 +637,8 @@ if (document.querySelector(".profile-block")) {
     }
   })
 
-  /* End  of Modal Related Code */
+  /* End of Modal Related Code */
+
 }
 
 /* ==== End of Profile Page Code ==== */

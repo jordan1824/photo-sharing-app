@@ -2,7 +2,7 @@
 
 {% block content %}
 {% load static %}
-    <div class='profile-background my-4'>
+    <div class='profile-background py-4'>
         <div class="profile-block">
             <div class='image-col mr-3 pl-1'>
                 <img class='profile-image' src="{{ person.profile.image.url }}" alt="User Profile Image">
@@ -62,5 +62,24 @@
         <button class='next-btn'><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
         <button class='previous-btn'><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
     </div>
+    {% if person == user %}
+    <div class='profile_modal edit-modal'>
+        <div class='profile_modal__exit-btn'><i class="fa fa-times" aria-hidden="true"></i></div>
+        <div class='profile_modal__container'>
+          <h3 class='profile_modal__title'>Edit Your Post</h3>
+          <textarea class='profile_modal__text'></textarea>
+          <button class='profile_modal__button profile_modal__update-btn'>Update Post</button>
+          <button class='profile_modal__cancel-btn'>Cancel</button>
+        </div>
+      </div>
+      <div class='profile_modal delete-modal'>
+        <div class='profile_modal__exit-btn'><i class="fa fa-times" aria-hidden="true"></i></div>
+        <div class='profile_modal__container'>
+          <h3 class='profile_modal__title profile_modal__title--small'>Are you sure you want to delete this post?</h3>
+          <button class='profile_modal__button profile_modal__button--delete'>Yes, Delete!</button>
+          <button class='profile_modal__button profile_modal__button--cancel'>Cancel</button>
+        </div>
+      </div>
+    {% endif %}
     <script src="{% static 'photo_sharing/modal.js' %}"></script>
 {% endblock %}

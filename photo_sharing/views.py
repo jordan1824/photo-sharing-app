@@ -109,6 +109,19 @@ def dynamic_image_load(request):
         return JsonResponse({"empty": True}, safe=False)
 
 def create_post(request):
+    if request.method == "POST":
+        image = request.FILES.get('image')
+        print(image)
+        description = request.POST.get('description')
+        if not image or not description:
+            # Add in messages.error message here
+            return redirect('/new-post/')
+        for letter in "<>":
+            if letter in description:
+                # Add in error message here
+                return redirect('/new-post/')
+        Post.objects.create(user=request.user, image=image, description=description)
+        return redirect(f'/user/profile/{request.user.username}/')
     return render(request, "photo_sharing/create_post.html")
 
 def update_post(request, id):

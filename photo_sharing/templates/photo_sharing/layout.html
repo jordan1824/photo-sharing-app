@@ -31,6 +31,7 @@
                 <li class='nav-item mx-auto'><a class='nav-link' href='{% url "home" %}'>Home</a></li>
                 <li class='nav-item mx-auto'><a class='nav-link' href='{% url "global-posts" %}'>Global Posts</a></li>
                 <li class='nav-item mx-auto'><a class='nav-link' href='{% url "profile" user.username %}'>Profile</a></li>
+                <li class='nav-item mx-auto'><a class='nav-link' href='{% url "create-post" %}'>Create Post</a></li>
                 <li class='nav-item mx-auto'><a class='nav-link' href='{% url "logout" %}'>Logout</a></li>
             {% else %}
                 <li class='nav-item mx-auto'><a class='nav-link' href='{% url "login" %}'>Login</a></li>
