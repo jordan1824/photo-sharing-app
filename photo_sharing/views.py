@@ -111,9 +111,12 @@ def dynamic_image_load(request):
 def create_post(request):
     if request.method == "POST":
         image = request.FILES.get('image')
-        print(image)
         description = request.POST.get('description')
+        image_type = image.__dict__["content_type"]
         if not image or not description:
+            # Add in messages.error message here
+            return redirect('/new-post/')
+        if image_type != "image/jpeg" and image_type != "image/png":
             # Add in messages.error message here
             return redirect('/new-post/')
         for letter in "<>":
@@ -147,7 +150,6 @@ def delete_post(request, id):
             raise Http404()
         if post.user == request.user:
             post.delete()
-            print("deleted")
             return HttpResponse("post deleted")
     raise Http404()
 

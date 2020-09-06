@@ -1,12 +1,25 @@
 {% extends 'photo_sharing/layout.html' %}
 {% block content %}
+{% load static %}
 <div class='bg-dark py-3 mt-5 text-center'>
-  <form action="{% url 'create-post' %}" method="POST" enctype="multipart/form-data">
+  <h2 class='create-post-title'>Create New Post</h2>
+  <form action="{% url 'create-post' %}" method="POST" enctype="multipart/form-data" class='create-post-form'>
     {% csrf_token %}
-    Select image to upload:
-    <input type="file" name="image">
-    <input type="text" name="description">
+    <!-- Use label to create a button, and on upload, change the button to green then -->
+    <!-- also make sure to display the image on the page. Maybe crop image to how it will be displayed (600 x 600) -->
+    <label for="image-upload" class='uploaded-image'>
+      <img src="" alt="Uploaded Image" id='uploadedImage'>
+      <div class='upload-image-text'>
+        <span class='upload-text'>Upload Image</span>
+        <span><i class="fa fa-upload" aria-hidden="true"></i></span>
+      </div>
+    </label>
+    <label for="image-upload" class='upload-post-btn'>Upload Post Image</label>
+    <input type="file" name="image" class='image-upload' id='image-upload'>
+    <label for="create-post-description" class='post-description-label'>Enter Post Description:</label>
+    <textarea type="text" name="description" class='create-post-description' id='create-post-description'></textarea>
     <button type="submit" class='create-post-btn'>Create Post</button>
   </form>
 </div>
+<script src='{% static "photo_sharing/form.js" %}'></script>
 {% endblock %}
