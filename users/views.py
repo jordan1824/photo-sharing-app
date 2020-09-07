@@ -8,6 +8,7 @@ from django.db.models import Q
 from .forms import UserRegistrationForm
 
 
+
 def profile(request, username):
     user = User.objects.get(username=username)
     posts = Post.objects.filter(user=user).all().order_by('-date_created')
@@ -17,18 +18,31 @@ def profile(request, username):
     })
 
 
-class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Profile
-    fields = ['image', 'bio']
-    template_name = 'users/edit_profile.html'
-
-    def test_func(self):
-        current_user_profile = self.request.user.profile
-        profile_being_accessed = get_object_or_404(
-            Profile, id=self.kwargs.get('pk'))
-        if current_user_profile == profile_being_accessed:
-            return True
-        return False
+def update_profile(request):
+    user_profile = Profile.objects.get(user=request.user)
+    if request.method == "POST":
+        image = request.FILES.get('image')
+        bio = request.POST.get('bio')
+        if image:
+            image_type = image.__dict__["content_type"]
+            if image_type != "image/jpeg" and image_type != "image/png":
+                # Add in messages.error message here
+                return redirect(f'/user/update-profile/')
+            # Save image to /media/ folder somehow
+            user_profile.image = image
+        if not bio:
+            return redirect(f'/user/update-profile/')
+        for letter in "<>":
+            if letter in bio:
+                # Add in error message here
+                return redirect(f'/user/update-profile/')
+        user_profile.bio = bio
+        user_profile.save()
+        return redirect(f'/user/profile/{request.user.username}/')
+    else:
+        return render(request, "users/edit_profile.html", {
+            "bio": user_profile.__dict__['bio']
+        })
 
 
 def user_list(request):

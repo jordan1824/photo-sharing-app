@@ -21,7 +21,7 @@
                 </div>
                 <p class='mt-2'>{{ person.profile.bio }}</p>
                 {% if person == user %}
-                    <a class='btn btn-outline-light follow-btn' href="{% url 'edit-profile' user.profile.id %}">Edit Profile</a>
+                    <a class='btn btn-outline-light follow-btn' href="{% url 'edit-profile' %}">Edit Profile</a>
                     <btn class='btn btn-outline-light modify-post-btn'>Modify Post</btn>
                 {% else %}
                     <a class='btn btn-outline-light follow-btn' href="{% url 'follow' person.id %}">Follow User</a>

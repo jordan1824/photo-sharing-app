@@ -871,7 +871,7 @@ main {
 }
 .fa-upload {
     position: relative;
-    top: 0.3em;
+    bottom: 0.3em;
     font-size: 3em;
     border: 2px solid white;
     padding: 0.15em;
@@ -880,7 +880,7 @@ main {
 .image-upload {
     display: none;
 }
-.upload-post-btn {
+.upload-post-btn, .update-profile-btn {
     background: #007bff;
     padding: 0.5em 1em;
     cursor: pointer;
@@ -913,6 +913,11 @@ main {
     width: 50%;
     padding: 0.5em 1em;
     border-radius: 5px;
+}
+
+.update-profile-btn {
+    width: 100%;
+    text-align: center;
 }
 
 /* ==== END OF CREATE POST PAGE ==== */
