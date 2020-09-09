@@ -156,8 +156,8 @@ def delete_post(request, id):
 def get_users(request):
     query = request.GET.get("search")
     users = list(User.objects.filter(username__contains=query).all().values('username', 'id'))
-    if len(users) > 6:
-        users = users[:5]
+    if len(users) > 5:
+        users = users[:4]
     for user in users:
         user["profileImage"] = list(Profile.objects.filter(user_id=user['id']).all().values('image'))[0]['image']
     return JsonResponse(users, safe=False)

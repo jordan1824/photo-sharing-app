@@ -3,17 +3,17 @@
 {% block content %}
 <br>
 {% if current_user.profile.following.all.count > 0 %}
-    <div class='home-icons w-25 my-auto'>
+    <div class='text-center'>
         {% if parameter == user.username %}
-        <h5 class='text-center my-auto'>Users You Follow</h5>
+        <h5 class='page-title'>Users You Follow</h5>
         {% else %}
-        <h5 class='text-center my-auto'>Users {{ parameter|title }} Follows</h5>
+        <h5 class='page-title'>Users {{ parameter|title }} Follows</h5>
         {% endif %}
     </div>
 {% endif %}
 {% for person in current_user.profile.following.all %}
 <div class="row no-gutters user-page">
-    <div class='col-12 profile-background my-3'>
+    <div class='col-12 profile-background my-2'>
         <div class="profile-block">
             <div class='image-col mr-3 pl-1 my-auto'>
                 <img class='profile-image' src="{{ person.profile.image.url }}" alt="User Profile Image">
@@ -22,9 +22,9 @@
                 <a class='username-link' href="{% url 'profile' person.username %}"><h4>{{ person.username|title }}</h4></a>
                 <p class='mb-2'>{{ person.profile.bio|truncatechars:90 }}</p>
                 {% if user.username == parameter %}
-                <a class='btn btn-outline-light mt-0 user-btn' href="{% url 'unfollow' person.id %}">Unfollow User</a>
+                <a class='btn user-btn' href="{% url 'unfollow' person.id %}">Unfollow <i class="fa fa-user" aria-hidden="true"></i></a>
                 {% elif person not in following_list and person != user %}
-                <a class='btn btn-outline-light mt-0 user-btn' href="{% url 'follow' person.id %}">Follow User</a>
+                <a class='btn user-btn' href="{% url 'follow' person.id %}">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
                 {% else %}
                 <div class='py-2'></div>
                 {% endif %}

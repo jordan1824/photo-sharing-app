@@ -8,9 +8,9 @@
                 <img class='profile-image' src="{{ person.profile.image.url }}" alt="User Profile Image">
             </div>
             <div class='bio-col my-2'>
-                <h4 class='d-inline-block'>{{ person.username|title }}</h4>
-                <div class='d-inline-block'>
-                    <div class='following'><a href="{% url 'following' person.username %}"><small>Following {{ person.profile.following.all.count }}</small></a></div>
+                <h4 class='d-inline-block profile-username'>{{ person.username|title }}</h4>
+                <div class='d-inline-block profile-follow-container'>
+                    <div class='following'><a href="{% url 'following' person.username %}"><small>{{ person.profile.following.all.count }} Following</small></a></div>
                     <div class='followers'><a href="{% url 'followers' person.username %}"><small>{{ person.followers.all.count }}
                     {% if person.followers.all.count == 1 %}
                     Follower
@@ -19,10 +19,13 @@
                     {% endif %}
                     </small></a></div>
                 </div>
-                <p class='mt-2'>{{ person.profile.bio }}</p>
+                <p class='mt-2 profile-bio-text'>{{ person.profile.bio }}</p>
                 {% if person == user %}
-                    <a class='btn btn-outline-light follow-btn' href="{% url 'edit-profile' %}">Edit Profile</a>
-                    <btn class='btn btn-outline-light modify-post-btn'>Modify Post</btn>
+                    <div class='profile-btns-container'>
+                        <a type="button" data-toggle="tooltip" data-placement="left" title="View Liked Posts" class='btn text-light profile-likes-btn' href="{% url 'edit-profile' %}"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+                        <btn type="button" data-toggle="tooltip" data-placement="left" title="Modify Post" class='btn text-light modify-post-btn'><i class="fa fa-database" aria-hidden="true"></i></btn>
+                        <a type="button" data-toggle="tooltip" data-placement="left" title="Edit Profile" class='btn text-light follow-btn' href="{% url 'edit-profile' %}"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                    </div>
                 {% else %}
                     <a class='btn btn-outline-light follow-btn' href="{% url 'follow' person.id %}">Follow User</a>
                 {% endif %}
@@ -58,9 +61,9 @@
     <div class='custom_modal'>
         <div class='custom_modal__exit-btn'><i class="fa fa-times" aria-hidden="true"></i></div>
         <div class='custom_modal__container'>
+            <button class='next-btn'><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+            <button class='previous-btn'><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
         </div>
-        <button class='next-btn'><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-        <button class='previous-btn'><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
     </div>
     {% if person == user %}
     <div class='profile_modal edit-modal'>

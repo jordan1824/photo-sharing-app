@@ -62,3 +62,8 @@ document.addEventListener("click", (event) => {
 })
 
 /* End of Asynchronous Search Results */
+
+// Tooltip
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

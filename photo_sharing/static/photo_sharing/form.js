@@ -75,27 +75,27 @@ if (document.querySelector(".update-profile-image")) {
       } else {
         // Make this an alert message that disappears after 5 seconds
         uploadImageBtn.classList.remove("success-btn")
-        uploadImageBtn.innerHTML = "Upload Post Image"
+        uploadImageBtn.innerHTML = "Change Profile Picture"
         uploadedImage.setAttribute("src", "https://www.tibs.org.tw/images/default.jpg")
         alert("You must upload a JPEG/PNG Image File")
       }
     } else {
       uploadImageBtn.classList.remove("success-btn")
-      uploadImageBtn.innerHTML = "Upload Post Image"
+      uploadImageBtn.innerHTML = "Change Profile Picture"
       uploadedImage.setAttribute("src", "https://www.tibs.org.tw/images/default.jpg")
       alert("You must upload a JPEG/PNG Image File")
     }
   })
 
-  let createPostForm = document.querySelector(".create-post-form")
-  let postDescription = document.querySelector(".create-post-description")
-  createPostForm.addEventListener("submit", (e) => {
+  let updateProfileForm = document.querySelector(".update-profile-form")
+  let profileBio = document.querySelector(".update-profile-bio")
+  updateProfileForm.addEventListener("submit", (e) => {
     if (imageUpload.value) {
       if (!imageUpload.files[0].type.includes("image")) {
         e.preventDefault()
       }
     }
-    if (!postDescription.value) {
+    if (!profileBio.value) {
       e.preventDefault()
     }
   })

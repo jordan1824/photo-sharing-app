@@ -2,21 +2,21 @@
 
 {% block content %}
 {% load static %}
-<div class="card mx-auto my-4 profile-card bg-light" style="width: 26rem;">
-    <div class="card-header py-3 bg-dark">
+<div class="card mx-auto my-4 profile-card">
+    <div class="card-header pb-2 bg-dark edit-profile-title">
         <h3 class='text-center my-0'>Update Profile</h3>
     </div>
   <div class="card-body bg-dark">
-    <form method='POST' enctype='multipart/form-data' class='create-post-form'>
+    <form method='POST' enctype='multipart/form-data' class='update-profile-form'>
         {% csrf_token %}
         <label for="image-upload" class='update-profile-image py-3'>
             <img src="{{ user.profile.image.url }}" class="card-img-top rounded-circle" id='uploadedImage' alt="...">
         </label>
-        <label for="image-upload" class='update-profile-btn'>Upload New Image</label>
+        <label for="image-upload" class='update-profile-btn'>Change Profile Picture</label>
         <input type="file" name="image" class='image-upload' id='image-upload'>
-        <label for="create-post-description" class='post-description-label'>Enter Bio:</label>
-        <textarea maxlength="100" type="text" name="bio" class='create-post-description' id='create-post-description'>{{ bio }}</textarea>
-        <button type="submit" class='create-post-btn'>Save Changes</button>
+        <label for="update-profile-bio" class='profile-bio-label'>Edit Your Bio:</label>
+        <textarea maxlength="100" type="text" name="bio" class='update-profile-bio' id='update-profile-bio'>{{ bio }}</textarea>
+        <button type="submit" class='save-changes-btn mt-4 mb-3'>Save Changes</button>
     </form>
   </div>
 </div>

@@ -3,11 +3,11 @@
 {% block content %}
 <br>
 <div class='text-center'>
-    <h3 class="text-white bg-dark py-2 px-3 d-inline-block">Users That Like This Post</h3>
+    <h3 class="page-title">Post Likes</h3>
 </div>
 {% for like in results %}
 <div class="row no-gutters user-page">
-    <div class='col-12 profile-background my-3'>
+    <div class='col-12 profile-background my-2'>
         <div class="profile-block">
             <div class='image-col mr-3 pl-1 my-auto'>
                 <img class='profile-image' src="{{ like.user.profile.image.url }}" alt="User Profile Image">
@@ -15,7 +15,7 @@
             <div class='bio-col my-auto pr-0'>
                 <a class='username-link' href="{% url 'profile' like.user.username %}"><h4>{{ like.user.username|title }}</h4></a>
                 <p class='mb-2'>{{ like.user.profile.bio|truncatechars:90 }}</p>
-                <a class='btn btn-outline-light mt-0 user-btn' href="#">Follow User</a>
+                <a class='btn user-btn' href="#">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
