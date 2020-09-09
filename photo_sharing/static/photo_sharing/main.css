@@ -224,6 +224,14 @@ main {
 
 /* ==== HOME PAGE ==== */
 
+#global-posts {
+    width: 90%;
+    max-width: 550px;
+    margin: auto;
+}
+.home-title {
+    font-size: 1.25rem !important;
+}
 .home-icons {
     background: #262B2F;
     padding: 10px 20px;
@@ -239,7 +247,7 @@ main {
     height: 400px;
 }
 .home .post-image img {
-    height: 400px;
+    height: 100%;
     width: 100%;
 }
 .home .post-description {
@@ -251,7 +259,7 @@ main {
     width: 100%;
     min-height: 68px;
     display: inline-block;
-    max-height: 150px;
+    max-height: 80px;
     overflow-y: scroll;
 }
 .post-text {
@@ -326,12 +334,65 @@ main {
     color: white;
 }
 
+
+@media (max-width: 580px) {
+    .home .post-image {
+        height: 350px;
+    }
+    .home .post-description {
+        padding-right: 10px;
+        font-size: 0.8rem;
+        position: static;
+    }
+    .home .post-date {
+        display:none;
+    }
+    .like-btn {
+        width: 10px;
+        height: 28px;
+        overflow: hidden;
+        border-radius: 4px;
+        border: 1px solid #7b7d7e;
+        top: 310px;
+        right: 10px;
+        transform: scale(1.1);
+    }
+    .liked {
+        padding-right: 24px;
+    }
+}
+@media (max-width: 450px) {
+    .home-title {
+        font-size: 1.1rem !important;
+    }
+    .home .post-block {
+        margin: 10px;
+    }
+    .home .post-description-section {
+        padding: 12px 8px 8px;
+    }
+    .home .post-image {
+        height: 280px;
+    }
+    .home .post-description {
+        font-size: 0.65rem;
+        padding-right: 0;
+        margin: 0 0 0 15px;
+    }
+    .like-btn {
+        top: 243px;
+        transform: scale(0.9);
+    }
+}
+
 /* ==== END OF HOME PAGE ==== */
 
 
 
 /* ==== START OF GLOBAL FEED ==== */
-
+.dark-background {
+    background: #262B2F;
+}
 .global-feed {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -339,17 +400,28 @@ main {
     padding: 15px 30px 30px;
     margin: auto;
     background: #262B2F;
-    outline: 5px solid rgba(87, 87, 87, 0.8);
+    max-width: 1400px;
 }
 .post-img-div {
-    width: 100%;
-    height: 400px;
+    position: relative;
+    max-height: 400px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
+.post-img-div::before {
+    content: ' ';
+    display: block;
+    width: 100%;
+    padding-top: 100%;
+}
 .post-img {
+    position: absolute;
     width: 100%;
     height: 100%;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
     filter: brightness(85%);
     cursor: pointer;
     transition: transform 0.7s, filter 0.7s;
@@ -359,7 +431,18 @@ main {
     transform: scale(1.05);
 }
 
-
+@media (max-width: 750px) {
+    .global-feed {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 15px 10px 30px;
+    }
+}
+@media (max-width: 400px) {
+    .global-feed {
+        grid-template-columns: 1fr;
+        padding: 15px 40px 30px;
+    }
+}
 
 /* ==== END OF GLOBAL FEED ==== */
 
@@ -401,8 +484,8 @@ main {
 }
 .custom_modal__exit-btn {
     position: absolute;
-    top: 30px;
-    right: 50px;
+    top: 15px;
+    right: 30px;
     font-size: 3rem;
     cursor: pointer;
     transition: color 0.3s;
@@ -440,6 +523,26 @@ main {
 }
 .next-btn:focus, .previous-btn:focus {
     outline: none;
+}
+
+@media (max-width: 750px) {
+    .custom_modal__exit-btn {
+        top: 10px;
+        right: 10px;
+        transform: scale(0.8);
+    }
+    .next-btn {
+        top: 45%;
+        right: 1%;
+        color: #f8f9fa;
+        text-shadow: -1px -1px 0 #686969, 1px -1px 0 #7b7d7e, -1px 1px 0 #7b7d7e, 1px 1px 0 #7b7d7e;
+    }
+    .previous-btn {
+        top: 45%;
+        left: 1%;
+        color: #f8f9fa;
+        text-shadow: -1px -1px 0 #7b7d7e, 1px -1px 0 #7b7d7e, -1px 1px 0 #7b7d7e, 1px 1px 0 #7b7d7e;
+    }
 }
 
 /* ==== END OF GLOBAL MODAL ==== */
@@ -487,8 +590,22 @@ main {
     flex-direction: column-reverse;
 }
 .follow-btn {
+    font-size: 0.9rem;
+    padding: 4px 10px;
+    position: absolute;
+    color: #f8f9fa;
+    top: 5px;
+    right: 10px;
+    border: 1px solid #f8f9fa;
+}
+.edit-profile-btn {
     font-size: 1.4rem;
-    padding: 5px;
+    padding: 4px 10px;
+    margin-right: -1px;
+}
+.follow-btn:hover {
+    background: #f8f9fa;
+    color: #262B2F;
 }
 .modify-post-btn {
     font-size: 1.15rem;
@@ -500,8 +617,8 @@ main {
 .modify-post-btn:hover .fa-database {
     color: #CBD3DA;
 }
-.profile-likes-btn .fa-thumbs-up {
-    font-size: 1.2rem;
+.profile-likes-btn .fa-heart-o {
+    font-size: 1.3rem;
     margin-top: 5px;
 }
 .profile-follow-container {
@@ -556,7 +673,7 @@ main {
         text-align: center;
         position: static;
         padding: 10px;
-        padding-bottom: 70px;
+        padding-bottom: 90px;
     }
     .profile-follow-container {
         left: 50%;
@@ -567,10 +684,16 @@ main {
     .profile-btns-container {
         flex-direction: row;
         gap: 20px;
-        top: 5px;
+        top: auto;
+        bottom: 50px;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-45%);
         justify-content: center;
+    }
+    .edit-profile-btn {
+        position: relative;
+        top: 2px;
+        right: 5px;
     }
     .modify-post-btn {
         top: 2px;
@@ -583,10 +706,11 @@ main {
     .image-col {
         padding: 0;
         margin: auto !important;
-        padding-top: 50px;
+        padding-top: 20px;
         text-align: center;
     }
     .image-col img {
+        border-width: 1px;
         border-radius: 50%;
     }
     .tooltip-arrow,
@@ -595,17 +719,33 @@ main {
     .arrow::before {
         display: none;
     }
+    .profile-likes-btn .fa-heart-o {
+        margin-right: -3px;
+    }
+    .follow-btn {
+        bottom: 65px;
+        top: auto;
+        right: 50%;
+        transform: translateX(50%);
+    }
 }
 
 
 /* Post Section  */
+.profile-post-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .post-block {
     background: #262B2F;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     margin: 20px;
-    box-shadow: 5px 5px 7px grey;
+    box-shadow: 0px 2px 10px 3px grey;
+    position: relative;
+    width: 370px;
 }
 .overflow-hidden {
     overflow: hidden;
@@ -701,7 +841,9 @@ main {
 }
 
 // Edit & Delete Modal
-:root {}
+:root {
+    --btn-hover: #b0b1b1;
+}
 .profile_modal {
     position: fixed;
     left: 0;
@@ -710,7 +852,7 @@ main {
     bottom: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     z-index: -5;
     overflow: auto;
     opacity: 0;
@@ -728,9 +870,10 @@ main {
     transform: translateX(-50%) translateY(-70%) scale(1.2);
     width: 90%;
     max-width: 600px;
-    border: 5px solid white;
+    border: 2px solid white;
     text-align: center;
     transition: transform 0.7s;
+    padding: 30px 10px;
 }
 .profile_modal--visible .profile_modal__container {
     transform: translateX(-50%) translateY(-70%) scale(1);
@@ -749,7 +892,7 @@ main {
     width: 80%;
     margin: 10px 5px 5px;;
     font-family: sans-serif;
-    border: 3px solid white;
+    border: 2px solid #b4b4b4;
     font-size: 1.1rem;
     padding-top: 5px;
 }
@@ -762,29 +905,35 @@ main {
     display: block;
     padding: 9px 14px;
     font-size: 1.1rem;
-    background: white;
-    color: black;
-    border: 2px solid blue;
+    background: #007bff;
+    color: white;
+    border: 1px solid lightgrey;
     border-radius: 4px;
     text-align: center;
     margin: 20px auto 15px;
     cursor: pointer;
 }
 .profile_modal__button:hover {
-    background: #ba833a;
+    background: #0065d1;
     transition: background 0.5s;
 }
 .profile_modal__button--delete, .profile_modal__button--delete-all {
-    background: #D8514E;
+    background: rgb(224, 81, 81);
+    color: white;
 }
 .profile_modal__button--delete:hover, .profile_modal__button--delete-all:hover {
-    background: #c61717;
+    background: #ad1313;
 }
 .profile_modal__button--cancel {
     margin-top: 0px;
     margin-bottom: 25px;
     font-size: 1rem;
     padding: 7px 12px;
+    background: #f8f9fa;
+    color: black
+}
+.profile_modal__button--cancel:hover {
+    background: #b0b1b1;
 }
 .profile_modal__cancel-btn {
     background: none;
@@ -795,7 +944,7 @@ main {
     cursor: pointer;
 }
 .profile_modal__cancel-btn:hover {
-    color: blue;
+    color: #b0b1b1;
     transition: color 0.3s;
 }
 .profile_modal__cancel-btn:focus {
@@ -807,12 +956,10 @@ main {
     right: 40px;
     font-size: 3rem;
     color: white;
-    text-shadow: -1px -1px 0 red, 1px -1px 0 red, -1px 1px 0 red, 1px 1px 0 red;
     cursor: pointer;
 }
 .profile_modal__exit-btn:hover {
-    color: white;
-    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+    color: #bdbcbc;
     transition: all 0.3s;
 }
 

@@ -21,7 +21,7 @@ def home_feed(request):
         "newest_posts": newest_posts
     })
 
-
+@login_required
 def post_like(request, pk):
     user = request.user
     post = Post.objects.get(id=pk)
@@ -32,21 +32,21 @@ def post_like(request, pk):
         PostLike.objects.create(user=user, post=post)
         return HttpResponse("Added Like")
 
-
+@login_required
 def likes_list(request, pk):
     results = PostLike.objects.filter(post_id=pk).all()
     return render(request, 'photo_sharing/likes_list.html', {
         'results': results
     })
 
-
+@login_required
 def global_posts(request):
     return render(request, 'photo_sharing/global.html', {
         "post_likes": list(PostLike.objects.filter(user=request.user).values_list('post_id', flat=True).all()),
         "all_posts": Post.objects.all().order_by('-date_created')[:9]
     })
 
-
+@login_required
 def dynamic_load(request):
     
     start = int(request.GET["start"])
@@ -78,7 +78,7 @@ def dynamic_load(request):
     else:
         return JsonResponse({"empty": True}, safe=False)
 
-
+@login_required
 def get_single_post(request, id):
     post = list(Post.objects.filter(id=id).all().values('id', 'user', 'image', 'description', 'date_created'))
 
@@ -95,6 +95,7 @@ def get_single_post(request, id):
     else:
         raise Http404("Post could not be found.")
 
+@login_required
 def dynamic_image_load(request):
     start = int(request.GET["start"])
     end = int(request.GET["end"])
@@ -108,6 +109,7 @@ def dynamic_image_load(request):
     else:
         return JsonResponse({"empty": True}, safe=False)
 
+@login_required
 def create_post(request):
     if request.method == "POST":
         image = request.FILES.get('image')
@@ -127,6 +129,7 @@ def create_post(request):
         return redirect(f'/user/profile/{request.user.username}/')
     return render(request, "photo_sharing/create_post.html")
 
+@login_required
 def update_post(request, id):
     if request.method == "POST":
         post = Post.objects.get(id=id)
@@ -143,6 +146,7 @@ def update_post(request, id):
             return HttpResponse("post updated")
     raise Http404()
 
+@login_required
 def delete_post(request, id):
     if request.method == "POST":
         post = Post.objects.get(id=id)
@@ -153,6 +157,7 @@ def delete_post(request, id):
             return HttpResponse("post deleted")
     raise Http404()
 
+@login_required
 def get_users(request):
     query = request.GET.get("search")
     users = list(User.objects.filter(username__contains=query).all().values('username', 'id'))

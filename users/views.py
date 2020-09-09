@@ -6,9 +6,10 @@ from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from .forms import UserRegistrationForm
+from django.contrib.auth.decorators import login_required
 
 
-
+@login_required
 def profile(request, username):
     user = User.objects.get(username=username)
     posts = Post.objects.filter(user=user).all().order_by('-date_created')
@@ -17,7 +18,7 @@ def profile(request, username):
         'posts': posts
     })
 
-
+@login_required
 def update_profile(request):
     user_profile = Profile.objects.get(user=request.user)
     if request.method == "POST":
@@ -44,7 +45,7 @@ def update_profile(request):
             "bio": user_profile.__dict__['bio']
         })
 
-
+@login_required
 def user_list(request):
     query = request.GET.get('q')
     results = User.objects.filter(
@@ -54,7 +55,7 @@ def user_list(request):
         'following_list': list(Profile.objects.get(user=request.user).following.all())
     })
 
-
+@login_required
 def follow(request, pk):
     if request.user == User.objects.get(id=pk):
         return redirect('home')
@@ -62,14 +63,14 @@ def follow(request, pk):
     user_profile.following.add(User.objects.get(id=pk))
     return redirect('home')
 
-
+@login_required
 def unfollow(request, pk):
     user = User.objects.get(id=pk)
     current_user_profile = User.objects.get(id=request.user.id).profile
     current_user_profile.following.remove(user)
     return redirect('home')
 
-
+@login_required
 def followers(request, username):
     user = User.objects.get(username=username)
     return render(request, 'users/followers.html', {
@@ -78,7 +79,7 @@ def followers(request, username):
         'following_list': list(Profile.objects.get(user=request.user).following.all())
     })
 
-
+@login_required
 def following(request, username):
     user = User.objects.get(username=username)
     return render(request, 'users/following.html', {

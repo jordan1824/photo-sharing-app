@@ -83,7 +83,7 @@ let createPost = function(post) {
   firstDiv.className = 'row no-gutters justify-content-center home'
 
   let secondDiv = document.createElement("div")
-  secondDiv.className = "col-9 post-block"
+  secondDiv.className = "col-12 post-block"
   
   let thirdDiv = document.createElement("div")
   thirdDiv.className = "post-image"

@@ -4,12 +4,14 @@
 {% load static %}
 
 
-<div class='global-feed'>
-    {% for post in all_posts %}
-        <div class='post-img-div'>
-            <img data-id='{{post.id}}' class='post-img' src="{{ post.image.url }}" alt="Post Image">
-        </div>
-    {% endfor %}
+<div class='dark-background'>
+    <div class='global-feed'>
+        {% for post in all_posts %}
+            <div class='post-img-div'>
+                <img data-id='{{post.id}}' class='post-img' src="{{ post.image.url }}" alt="Post Image">
+            </div>
+        {% endfor %}
+    </div>
 </div>
 <div class='custom_modal'>
     <div class='custom_modal__exit-btn'><i class="fa fa-times" aria-hidden="true"></i></div>
