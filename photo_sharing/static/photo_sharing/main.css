@@ -872,7 +872,7 @@ main {
     flex-wrap: wrap;
     justify-content: center;
 }
-.post-block {
+.post-block, .profile-post-block {
     background: #262B2F;
     display: flex;
     flex-direction: column;
@@ -890,7 +890,7 @@ main {
     height: 300px;
 }
 .post-image img {
-    height: 300px;
+    height: 100%;
     width: 100%;
 }
 .post-description-section {
@@ -974,6 +974,23 @@ main {
     0% {opacity: 1}
     100% {opacity: 0}
 }
+@media (max-width: 900px) {
+    .profile-post-block {
+        width: 40%;
+    }
+    .profile-post-block .post-image {
+        height: 275px;
+    }
+}
+@media (max-width: 750px) {
+    .profile-post-block {
+        width: 370px;
+    }
+    .profile-post-block .post-image {
+        height: 300px;
+    }
+}
+
 
 // Edit & Delete Modal
 :root {
@@ -1073,9 +1090,10 @@ main {
 .profile_modal__cancel-btn {
     background: none;
     border: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: white;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     cursor: pointer;
 }
 .profile_modal__cancel-btn:hover {
