@@ -169,3 +169,13 @@ def get_users(request):
     for user in users:
         user["profileImage"] = list(Profile.objects.filter(user_id=user['id']).all().values('image'))[0]['image']
     return JsonResponse(users, safe=False)
+
+@login_required
+def post_likes_list(request):
+    post_likes = list(PostLike.objects.filter(user=request.user).values('post_id').all())
+    post_likes = list(map(lambda item: item['post_id'], post_likes))
+    posts = Post.objects.filter(id__in=post_likes).all().order_by('-date_created')
+    return render(request, "photo_sharing/post_likes_list.html", {
+        "posts": posts,
+        "post_likes": list(PostLike.objects.filter(user=request.user).values_list('post_id', flat=True).all())
+    })

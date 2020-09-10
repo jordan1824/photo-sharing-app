@@ -113,8 +113,7 @@ main {
 }
 .loading-icon {
     position: absolute;
-    right: 2.2em;
-    top: 0.45em;
+    right: -12px;
     display: none;
     transform: scale(0.2);
 }
@@ -185,7 +184,7 @@ main {
     font-size: 1.4rem;
     margin: auto 0.5em;
 }
-// Loading Icon
+
 .lds-spinner {
     color: official;
     display: inline-block;
@@ -823,6 +822,11 @@ main {
     border-radius: 2%;
     border: 2px solid #c2c2c2;
 }
+.profile-fol-btn {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
 .bio-col {
     padding: 5px;
     padding-left: 13px;
@@ -917,6 +921,12 @@ main {
         align-items: center;
         position: relative;
         max-width: 280px;
+    }
+    .profile-fol-btn {
+        top: auto;
+        right: 50%;
+        transform: translateX(52%);
+        bottom: 55px;
     }
     .bio-col {
         text-align: center;
@@ -1106,10 +1116,6 @@ main {
 }
 
 
-// Edit & Delete Modal
-:root {
-    --btn-hover: #b0b1b1;
-}
 .profile_modal {
     position: fixed;
     left: 0;
@@ -1651,6 +1657,11 @@ main {
 
 /* ==== END OF CREATE POST PAGE ==== */
 
+#liked-posts-list {
+    width: 90%;
+    max-width: 550px;
+    margin: auto;
+}
 
 /* ==== REGISTER PAGE ==== */
 

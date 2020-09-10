@@ -22,15 +22,15 @@
                 <p class='mt-2 profile-bio-text'>{{ person.profile.bio }}</p>
                 {% if person == user %}
                     <div class='profile-btns-container'>
-                        <a type="button" data-toggle="tooltip" data-placement="left" title="View Liked Posts" class='btn text-light profile-likes-btn' href="{% url 'edit-profile' %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                        <a type="button" data-toggle="tooltip" data-placement="left" title="View Liked Posts" class='btn text-light profile-likes-btn' href="{% url 'post-likes-list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                         <btn type="button" data-toggle="tooltip" data-placement="left" title="Modify Post" class='btn text-light modify-post-btn'><i class="fa fa-database" aria-hidden="true"></i></btn>
                         <a type="button" data-toggle="tooltip" data-placement="left" title="Edit Profile" class='btn text-light edit-profile-btn' href="{% url 'edit-profile' %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                     </div>
                 {% else %}
                     {% if person not in following_list %}
-                    <a class='btn user-btn follow' data-id='{{ person.id }}' href="{% url 'follow' person.id %}">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
+                    <a class='btn user-btn follow profile-fol-btn' data-id='{{ person.id }}' href="{% url 'follow' person.id %}">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
                     {% else %}
-                    <a class='btn user-btn unfollow' data-id='{{ person.id }}' href="{% url 'unfollow' person.id %}">Unfollow <i class="fa fa-user" aria-hidden="true"></i></a>
+                    <a class='btn user-btn unfollow profile-fol-btn' data-id='{{ person.id }}' href="{% url 'unfollow' person.id %}">Unfollow <i class="fa fa-user" aria-hidden="true"></i></a>
                     {% endif %}
                 {% endif %}
             </div>
@@ -59,7 +59,11 @@
                 </div>
             </div>
         {% empty %}
-        <div class='empty-profile-posts'>You do not have any posts.</div>    
+            {% if person == user %}
+            <div class='empty-profile-posts text-center home-title py-3 page-title'>You do not have any posts.</div>   
+            {% else %} 
+            <div class='empty-profile-posts text-center home-title py-3 page-title'>{{ person.username|title }} does not have any posts.</div>  
+            {% endif %}
         {% endfor %}
     </div>
     <div class='custom_modal'>
