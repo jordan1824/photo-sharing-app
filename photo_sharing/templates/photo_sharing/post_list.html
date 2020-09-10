@@ -1,14 +1,36 @@
 {% extends 'photo_sharing/layout.html' %}
 {% block content %}
 {% load static %}
-<div>
-    <div>
-
+<div class='custom_row'>
+<div class='first-col'>
+    <div class='left-home-sidebar'>
+        <div class="card text-dark bg-light border border-dark mb-3 text-center py-3" style="max-width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Primary card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+          <div class="card text-white bg-secondary mb-3 py-3" style="max-width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Secondary card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+        <div class="card text-white bg-dark mb-3 text-center py-3" style="max-width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Dark card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
     </div>
+</div>
+<div class='center-col'>
     <div id='global-posts'>
         <br>
         <div class='text-center'>
-            <h3 class="page-title home-title">Insert Icons Here</h3>
+            <div class="page-title home-title">
+                Home Feed
+            </div>
         </div>
         {% for post in newest_posts %}
             <div class="row no-gutters justify-content-center home">
@@ -51,13 +73,38 @@
         <div class='bg-dark text-white py-3 px-4 mt-4'>Your feed is empty. Begin following people to see their posts here.</div>
         {% endfor %}
     </div>
-    <div>
-        <!-- <div class='bg-dark mt-5 text-center border border-dark mx-auto w-75 p-3'>
-            <h5>{{ user.username }}</h5>
-            <p>{{ user.profile.bio }}</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta saepe accusamus tenetur pariatur ab eius nemo veritatis omnis itaque aliquid. Consequatur repellendus, laborum unde. Error quae quia asperiores libero nulla.</p>
-        </div> -->
+</div>
+<div class='last-col'>
+    <div class='home-sidebar'>
+        <div class='sidebar-container'>
+            <h3 class='sidebar-username'>Welcome, {{ user.username|title }}!</h3>
+            <div class='sidebar-img-container'>
+                <img src="{{ user.profile.image.url }}" alt="Your Profile Picture">
+            </div>
+            <div class='sidebar-btn-group'>
+            <a href='/user/update-profile/' type="button" class="btn btn-dark sidebar-btn">Edit Profile</a>
+            <a href='/user/profile/{{ user.username }}/' type="button" class="btn btn-dark sidebar-btn">View Profile</a>
+            <a href='/new-post/' type="button" class="btn btn-dark sidebar-btn">Create New Post</a>
+            <a href='/user/update-profile/' type="button" class="btn btn-dark sidebar-btn">View Liked Posts</a>
+            <a href='/global-posts/' type="button" class="btn btn-dark sidebar-btn">View Global Feed</a>
+            </div>
+            <div class='sidebar-block-content'>
+                {% if following %}
+                <h5 class='sidebar-follow-title'>Your Favourite Users:</h5>
+                <div class='sidebar-following-list'>
+                    {% for person in following %}
+                    <div class='sidebar-follow-img-container'>
+                        <a href="/user/profile/{{ person.username }}/"><img src="{{ person.profile.image.url }}" alt="User Image"></a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class='text-center py-3'>You are not following any users.</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
+</div>
 </div>
 <script src='{% static "photo_sharing/dynamicLoad.js" %}'></script>
 {% endblock %}
