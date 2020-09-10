@@ -322,6 +322,9 @@ main {
         .desktop-nav-icon {
             display: none;
         }
+        .search-nav-title {
+            display: initial !important;
+        }
   }
   @media (max-width: 450px) {
     .navbar h1 {

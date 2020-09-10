@@ -19,7 +19,8 @@ def home_feed(request):
     return render(request, 'photo_sharing/post_list.html', {
         "post_likes": list(PostLike.objects.filter(user=request.user).values_list('post_id', flat=True).all()),
         "newest_posts": newest_posts,
-        "following": list(Profile.objects.get(user=request.user).following.all())[:8]
+        "following": list(Profile.objects.get(user=request.user).following.all())[:8],
+        "home": True
     })
 
 @login_required
@@ -44,7 +45,8 @@ def likes_list(request, pk):
 def global_posts(request):
     return render(request, 'photo_sharing/global.html', {
         "post_likes": list(PostLike.objects.filter(user=request.user).values_list('post_id', flat=True).all()),
-        "all_posts": Post.objects.all().order_by('-date_created')[:9]
+        "all_posts": Post.objects.all().order_by('-date_created')[:9],
+        "global": True
     })
 
 @login_required
@@ -128,7 +130,7 @@ def create_post(request):
                 return redirect('/new-post/')
         Post.objects.create(user=request.user, image=image, description=description)
         return redirect(f'/user/profile/{request.user.username}/')
-    return render(request, "photo_sharing/create_post.html")
+    return render(request, "photo_sharing/create_post.html", {"createPost": True})
 
 @login_required
 def update_post(request, id):

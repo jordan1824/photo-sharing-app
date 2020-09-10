@@ -14,7 +14,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-      <a><h1>logo name</h1></a>
+      <a href='/'><h1>logo name</h1></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -35,14 +35,15 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
-                <li class='nav-item mx-auto'><a class='nav-link active' data-toggle="tooltip" data-placement="bottom" title="Home" href='{% url "home" %}'><span class='desktop-nav-icon'><i class="fa fa-home" aria-hidden="true"></i></span><span class='mobile-nav-title'>Home</span></a></li>
-                <li class='nav-item mx-auto'><a class='nav-link' data-toggle="tooltip" data-placement="bottom" title="Global Feed" href='{% url "global-posts" %}'><span class='desktop-nav-icon'><i class="fa fa-globe" aria-hidden="true"></i></span><span class='mobile-nav-title'>Global Feed</span></a></li>
-                <li class='nav-item mx-auto'><a class='nav-link' data-toggle="tooltip" data-placement="bottom" title="Profile" href='{% url "profile" user.username %}'><span class='desktop-nav-icon'><i class="fa fa-user" aria-hidden="true"></i></span><span class='mobile-nav-title'>Profile</span></a></li>
-                <li class='nav-item mx-auto'><a class='nav-link' data-toggle="tooltip" data-placement="bottom" title="Create Post" href='{% url "create-post" %}'><span class='desktop-nav-icon'><i class="fa fa-plus-square" aria-hidden="true"></i></span><span class='mobile-nav-title'>Create Post</span></a></li>
-                <li class='nav-item mx-auto'><a class='nav-link' data-toggle="tooltip" data-placement="bottom" title="Logout" href='{% url "logout" %}'><span class='desktop-nav-icon'><i class="fa fa-sign-out" aria-hidden="true"></i></span><span class='mobile-nav-title'>Logout</span></a></li>
+                <li class='nav-item mx-auto'><a class='nav-link {% if home %} active {% endif %}' data-toggle="tooltip" data-placement="bottom" title="Home" href='{% url "home" %}'><span class='desktop-nav-icon'><i class="fa fa-home" aria-hidden="true"></i></span><span class='mobile-nav-title'>Home</span></a></li>
+                <li class='nav-item mx-auto'><a class='nav-link {% if global %} active {% endif %}' data-toggle="tooltip" data-placement="bottom" title="Global Feed" href='{% url "global-posts" %}'><span class='desktop-nav-icon'><i class="fa fa-globe" aria-hidden="true"></i></span><span class='mobile-nav-title'>Global Feed</span></a></li>
+                <li class='nav-item mx-auto'><a class='nav-link {% if profile %} active {% endif %}' data-toggle="tooltip" data-placement="bottom" title="Profile" href='{% url "profile" user.username %}'><span class='desktop-nav-icon'><i class="fa fa-user" aria-hidden="true"></i></span><span class='mobile-nav-title'>Profile</span></a></li>
+                <li class='nav-item mx-auto d-none search-nav-title {% if search %} active {% endif %}'><a class='nav-link' data-toggle="tooltip" data-placement="bottom" title="Create Post" href='{% url "create-post" %}'><span class='mobile-nav-title'>Search</span></a></li>
+                <li class='nav-item mx-auto'><a class='nav-link {% if createPost %} active {% endif %}' data-toggle="tooltip" data-placement="bottom" title="Create Post" href='{% url "create-post" %}'><span class='desktop-nav-icon'><i class="fa fa-plus-square" aria-hidden="true"></i></span><span class='mobile-nav-title'>Create Post</span></a></li>
+                <li class='nav-item mx-auto'><a class='nav-link {% if logout %} active {% endif %}' data-toggle="tooltip" data-placement="bottom" title="Logout" href='{% url "logout" %}'><span class='desktop-nav-icon'><i class="fa fa-sign-out" aria-hidden="true"></i></span><span class='mobile-nav-title'>Logout</span></a></li>
             {% else %}
-                <li class='nav-item mx-auto'><a class='nav-link' href='{% url "login" %}'>Login</a></li>
-                <li class='nav-item mx-auto'><a class='nav-link' href='{% url "register" %}'>Register</a></li>
+                <li class='nav-item mx-auto'><a class='nav-link {% if login %} active {% endif %}' href='{% url "login" %}'>Login</a></li>
+                <li class='nav-item mx-auto'><a class='nav-link {% if register %} active {% endif %}' href='{% url "register" %}'>Register</a></li>
             {% endif %}
         </ul>
       </div>

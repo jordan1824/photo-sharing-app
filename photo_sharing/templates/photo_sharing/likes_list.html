@@ -15,7 +15,13 @@
             <div class='bio-col my-auto pr-0'>
                 <a class='username-link' href="{% url 'profile' like.user.username %}"><h4>{{ like.user.username|title }}</h4></a>
                 <p class='mb-2'>{{ like.user.profile.bio|truncatechars:90 }}</p>
-                <a class='btn user-btn' href="#">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
+                {% if like.user.username == user.username %}
+                <div class='py-2'></div>
+                {% elif like.user not in following_list %}
+                <a class='btn user-btn follow' data-id='{{ like.user.id }}' href="{% url 'follow' like.user.id %}">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
+                {% else %}
+                <a class='btn user-btn unfollow' data-id='{{ like.user.id }}' href="{% url 'unfollow' like.user.id %}">Unfollow <i class="fa fa-user" aria-hidden="true"></i></a>
+                {% endif %}
             </div>
         </div>
     </div>

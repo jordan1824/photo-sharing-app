@@ -27,7 +27,11 @@
                         <a type="button" data-toggle="tooltip" data-placement="left" title="Edit Profile" class='btn text-light edit-profile-btn' href="{% url 'edit-profile' %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                     </div>
                 {% else %}
-                    <a class='btn follow-btn' href="{% url 'follow' person.id %}">Follow User</a>
+                    {% if person not in following_list %}
+                    <a class='btn user-btn follow' data-id='{{ person.id }}' href="{% url 'follow' person.id %}">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
+                    {% else %}
+                    <a class='btn user-btn unfollow' data-id='{{ person.id }}' href="{% url 'unfollow' person.id %}">Unfollow <i class="fa fa-user" aria-hidden="true"></i></a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

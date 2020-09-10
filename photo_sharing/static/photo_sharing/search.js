@@ -67,3 +67,66 @@ document.addEventListener("click", (event) => {
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+
+/* Follow & Unfollow Button Actions */
+let followBtns = document.querySelectorAll(".follow")
+let unfollowBtns = document.querySelectorAll(".unfollow")
+
+// Follow Btn Code
+
+followBtns.forEach(btn => btn.addEventListener("click", event => {
+  event.preventDefault()
+  console.log("follow event listener ran")
+  let id = btn.getAttribute("data-id")
+  followUser(btn, id)
+}))
+
+function followUser(btn, id) {
+  fetch(`/user/follow/${id}/`)
+  .then(response => response.text())
+  .then(text => {
+    if (text == "Success") {
+      btn.innerHTML = `Unfollow <i class="fa fa-user" aria-hidden="true"></i>`
+      // Replace btn with new btn that has unfollow event listener
+      let newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      newBtn.addEventListener("click", event => {
+        event.preventDefault()
+        unfollowUser(newBtn, id)
+      })
+    }
+  })
+  .catch(function() {
+    console.log("Please try again later.")
+  })
+}
+
+// Unfollow Btn Code
+
+unfollowBtns.forEach(btn => btn.addEventListener("click", event => {
+  event.preventDefault()
+  console.log("unfollow event listener ran")
+  let id = btn.getAttribute("data-id")
+  unfollowUser(btn, id)
+}))
+
+function unfollowUser(btn, id) {
+  fetch(`/user/unfollow/${id}/`)
+  .then(response => response.text())
+  .then(text => {
+    if (text == "Success") {
+      btn.innerHTML = `Follow <i class="fa fa-user" aria-hidden="true"></i>`
+      // Replace btn with new btn that has follow event listener
+      let newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      newBtn.addEventListener("click", event => {
+        event.preventDefault()
+        followUser(newBtn, id)
+      })
+    }
+  })
+  .catch(function() {
+    console.log("Please try again later.")
+  })
+}

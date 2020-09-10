@@ -7,6 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from .forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponse
 
 
 @login_required
@@ -15,7 +17,8 @@ def profile(request, username):
     posts = Post.objects.filter(user=user).all().order_by('-date_created')
     return render(request, 'users/profile.html', {
         'person': user,
-        'posts': posts
+        'posts': posts,
+        'profile': True
     })
 
 @login_required
@@ -57,18 +60,31 @@ def user_list(request):
 
 @login_required
 def follow(request, pk):
-    if request.user == User.objects.get(id=pk):
-        return redirect('home')
+    follow_user = User.objects.filter(id=pk).first()
+    if not follow_user:
+        return HttpResponse("Error")
+    if request.user == follow_user:
+        return HttpResponse("Error")
+    followed_users = list(Profile.objects.get(user=request.user).following.all())
+    if follow_user in followed_users:
+        return HttpResponse("Error")
     user_profile = User.objects.get(id=request.user.id).profile
-    user_profile.following.add(User.objects.get(id=pk))
-    return redirect('home')
+    user_profile.following.add(follow_user)
+    return HttpResponse("Success")
 
 @login_required
 def unfollow(request, pk):
-    user = User.objects.get(id=pk)
+    unfollow_user = User.objects.filter(id=pk).first()
+    if not unfollow_user:
+        return HttpResponse("Error")
+    if request.user == unfollow_user:
+        return HttpResponse("Error")
+    followed_users = list(Profile.objects.get(user=request.user).following.all())
+    if unfollow_user not in followed_users:
+        return HttpResponse("Error")
     current_user_profile = User.objects.get(id=request.user.id).profile
-    current_user_profile.following.remove(user)
-    return redirect('home')
+    current_user_profile.following.remove(unfollow_user)
+    return HttpResponse("Success")
 
 @login_required
 def followers(request, username):
@@ -76,7 +92,6 @@ def followers(request, username):
     return render(request, 'users/followers.html', {
         'current_user': user,
         'parameter': username,
-        'following_list': list(Profile.objects.get(user=request.user).following.all())
     })
 
 @login_required
@@ -85,7 +100,6 @@ def following(request, username):
     return render(request, 'users/following.html', {
         'current_user': user,
         'parameter': username,
-        'following_list': list(Profile.objects.get(user=request.user).following.all())
     })
 
 
@@ -98,5 +112,19 @@ def register(request):
     else:
         form = UserRegistrationForm
     return render(request, 'users/register.html', {
-        'form': form
+        'form': form,
+        'register': True
     })
+
+class CustomLoginView(LoginView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["login"] = True
+        return context
+
+
+class CustomLogoutView(LogoutView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["logout"] = True
+        return context

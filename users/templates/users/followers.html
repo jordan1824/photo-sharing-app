@@ -21,10 +21,12 @@
             <div class='bio-col my-auto pr-0'>
                 <a class='username-link' href="{% url 'profile' person.user.username %}"><h4>{{ person.user.username|title }}</h4></a>
                 <p class='mb-2'>{{ person.user.profile.bio|truncatechars:90 }}</p>
-                {% if person.user not in following_list and person.user != user %}
-                <a class='btn user-btn' href="{% url 'follow' person.user.id %}">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
-                {% else %}
+                {% if person.user.username == user.username %}
                 <div class='py-2'></div>
+                {% elif person.user not in following_list %}
+                <a class='btn user-btn follow' data-id='{{ person.user.id }}' href="{% url 'follow' person.user.id %}">Follow <i class="fa fa-user" aria-hidden="true"></i></a>
+                {% else %}
+                <a class='btn user-btn unfollow' data-id='{{ person.user.id }}' href="{% url 'unfollow' person.user.id %}">Unfollow <i class="fa fa-user" aria-hidden="true"></i></a>
                 {% endif %}
             </div>
         </div>
