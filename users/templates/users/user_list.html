@@ -2,6 +2,17 @@
 
 {% block content %}
 <br>
+<div class='nav-search nav-search-block'>
+    <form class="form-inline my-2 my-lg-0" action='/user/list/'>
+        <input class="form-control mr-sm-2 search-input" type="text" name='q' placeholder="Search..." aria-label="Search" autocomplete="off" autofocus>
+        <a class="my-2 my-sm-0 search-btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></a>
+        <div class='loading-icon'>
+            <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+    </form>
+    <div class='search-results'>
+    </div>
+</div>
 {% for person in results %}
 <div class="row no-gutters user-page">
     <div class='col-12 profile-background my-3'>

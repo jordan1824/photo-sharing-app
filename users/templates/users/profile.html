@@ -60,9 +60,9 @@
             </div>
         {% empty %}
             {% if person == user %}
-            <div class='empty-profile-posts text-center home-title py-3 page-title'>You do not have any posts.</div>   
+            <div class='empty-profile-posts text-center profile-title py-3 page-title'>You do not have any posts.</div>   
             {% else %} 
-            <div class='empty-profile-posts text-center home-title py-3 page-title'>{{ person.username|title }} does not have any posts.</div>  
+            <div class='empty-profile-posts text-center profile-title py-3 page-title'>{{ person.username|title }} does not have any posts.</div>  
             {% endif %}
         {% endfor %}
     </div>
