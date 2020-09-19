@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'mynvsd=8jjl6sbl+zd&n1-#itjyg_ul0-i@=b1$*b_s6x2e$0a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['photo-sharing--app.herokuapp.com', 'localhost']
 
 
 # Application definition
