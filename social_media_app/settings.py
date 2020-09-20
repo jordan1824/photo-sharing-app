@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DEBUG_VALUE') == "True")
 
-ALLOWED_HOSTS = ['photo-sharing--app.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['photosharing-app.herokuapp.com', 'localhost']
 
 
 # Application definition
