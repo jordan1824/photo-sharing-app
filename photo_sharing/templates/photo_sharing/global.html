@@ -3,7 +3,7 @@
 {% block content %}
 {% load static %}
 
-
+<div class='global-background'>
 <div class='dark-background'>
     <div class='global-feed'>
         {% for post in all_posts %}
@@ -19,6 +19,7 @@
         <button class='next-btn'><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
         <button class='previous-btn'><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
     </div>
+</div>
 </div>
 <script src="{% static 'photo_sharing/modal.js' %}"></script>
 

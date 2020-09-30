@@ -1,29 +1,49 @@
 body {
-    background: #f8f9fa;
+    background-image: repeating-linear-gradient(135deg, rgba(128, 128, 128, 0.03) 0px, rgba(128, 128, 128, 0.03) 36px,rgba(119, 119, 119, 0.03) 36px, rgba(119, 119, 119, 0.03) 58px,rgba(198, 198, 198, 0.03) 58px, rgba(198, 198, 198, 0.03) 79px,rgba(15, 15, 15, 0.03) 79px, rgba(15, 15, 15, 0.03) 108px,rgba(146, 146, 146, 0.03) 108px, rgba(146, 146, 146, 0.03) 120px,rgba(135, 135, 135, 0.03) 120px, rgba(135, 135, 135, 0.03) 160px,rgba(98, 98, 98, 0.03) 160px, rgba(98, 98, 98, 0.03) 202px,rgba(197, 197, 197, 0.03) 202px, rgba(197, 197, 197, 0.03) 223px),repeating-linear-gradient(135deg, rgba(146, 146, 146, 0.03) 0px, rgba(146, 146, 146, 0.03) 48px,rgba(148, 148, 148, 0.03) 48px, rgba(148, 148, 148, 0.03) 92px,rgba(187, 187, 187, 0.03) 92px, rgba(187, 187, 187, 0.03) 124px,rgba(127, 127, 127, 0.03) 124px, rgba(127, 127, 127, 0.03) 137px,rgba(123, 123, 123, 0.03) 137px, rgba(123, 123, 123, 0.03) 156px,rgba(7, 7, 7, 0.03) 156px, rgba(7, 7, 7, 0.03) 198px,rgba(140, 140, 140, 0.03) 198px, rgba(140, 140, 140, 0.03) 224px,rgba(167, 167, 167, 0.03) 224px, rgba(167, 167, 167, 0.03) 249px),repeating-linear-gradient(135deg, rgba(118, 118, 118, 0.03) 0px, rgba(118, 118, 118, 0.03) 11px,rgba(69, 69, 69, 0.03) 11px, rgba(69, 69, 69, 0.03) 38px,rgba(202, 202, 202, 0.03) 38px, rgba(202, 202, 202, 0.03) 63px,rgba(213, 213, 213, 0.03) 63px, rgba(213, 213, 213, 0.03) 100px,rgba(238, 238, 238, 0.03) 100px, rgba(238, 238, 238, 0.03) 122px,rgba(221, 221, 221, 0.03) 122px, rgba(221, 221, 221, 0.03) 139px,rgba(34, 34, 34, 0.03) 139px, rgba(34, 34, 34, 0.03) 168px,rgba(52, 52, 52, 0.03) 168px, rgba(52, 52, 52, 0.03) 198px),linear-gradient(90deg, rgb(248, 248, 248),rgb(233, 233, 233));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     font-family: Helvetica, sans-serif;
     color: #f8f9fa;
     min-height: 100vh;
 }
 main {
-    background: #F8F9FA;
+    background-image: repeating-linear-gradient(135deg, rgba(128, 128, 128, 0.03) 0px, rgba(128, 128, 128, 0.03) 36px,rgba(119, 119, 119, 0.03) 36px, rgba(119, 119, 119, 0.03) 58px,rgba(198, 198, 198, 0.03) 58px, rgba(198, 198, 198, 0.03) 79px,rgba(15, 15, 15, 0.03) 79px, rgba(15, 15, 15, 0.03) 108px,rgba(146, 146, 146, 0.03) 108px, rgba(146, 146, 146, 0.03) 120px,rgba(135, 135, 135, 0.03) 120px, rgba(135, 135, 135, 0.03) 160px,rgba(98, 98, 98, 0.03) 160px, rgba(98, 98, 98, 0.03) 202px,rgba(197, 197, 197, 0.03) 202px, rgba(197, 197, 197, 0.03) 223px),repeating-linear-gradient(135deg, rgba(146, 146, 146, 0.03) 0px, rgba(146, 146, 146, 0.03) 48px,rgba(148, 148, 148, 0.03) 48px, rgba(148, 148, 148, 0.03) 92px,rgba(187, 187, 187, 0.03) 92px, rgba(187, 187, 187, 0.03) 124px,rgba(127, 127, 127, 0.03) 124px, rgba(127, 127, 127, 0.03) 137px,rgba(123, 123, 123, 0.03) 137px, rgba(123, 123, 123, 0.03) 156px,rgba(7, 7, 7, 0.03) 156px, rgba(7, 7, 7, 0.03) 198px,rgba(140, 140, 140, 0.03) 198px, rgba(140, 140, 140, 0.03) 224px,rgba(167, 167, 167, 0.03) 224px, rgba(167, 167, 167, 0.03) 249px),repeating-linear-gradient(135deg, rgba(118, 118, 118, 0.03) 0px, rgba(118, 118, 118, 0.03) 11px,rgba(69, 69, 69, 0.03) 11px, rgba(69, 69, 69, 0.03) 38px,rgba(202, 202, 202, 0.03) 38px, rgba(202, 202, 202, 0.03) 63px,rgba(213, 213, 213, 0.03) 63px, rgba(213, 213, 213, 0.03) 100px,rgba(238, 238, 238, 0.03) 100px, rgba(238, 238, 238, 0.03) 122px,rgba(221, 221, 221, 0.03) 122px, rgba(221, 221, 221, 0.03) 139px,rgba(34, 34, 34, 0.03) 139px, rgba(34, 34, 34, 0.03) 168px,rgba(52, 52, 52, 0.03) 168px, rgba(52, 52, 52, 0.03) 198px),linear-gradient(90deg, rgb(248, 248, 248),rgb(233, 233, 233));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 /* ==== NAVBAR ==== */
 
 .navbar {
-    background: #262B2F;
     padding: 15px 5% !important;
+    background-image: repeating-linear-gradient(135deg, rgba(128, 128, 128, 0.03) 0px, rgba(128, 128, 128, 0.03) 36px,rgba(119, 119, 119, 0.03) 36px, rgba(119, 119, 119, 0.03) 58px,rgba(198, 198, 198, 0.03) 58px, rgba(198, 198, 198, 0.03) 79px,rgba(15, 15, 15, 0.03) 79px, rgba(15, 15, 15, 0.03) 108px,rgba(146, 146, 146, 0.03) 108px, rgba(146, 146, 146, 0.03) 120px,rgba(135, 135, 135, 0.03) 120px, rgba(135, 135, 135, 0.03) 160px,rgba(98, 98, 98, 0.03) 160px, rgba(98, 98, 98, 0.03) 202px,rgba(197, 197, 197, 0.03) 202px, rgba(197, 197, 197, 0.03) 223px),repeating-linear-gradient(135deg, rgba(146, 146, 146, 0.03) 0px, rgba(146, 146, 146, 0.03) 48px,rgba(148, 148, 148, 0.03) 48px, rgba(148, 148, 148, 0.03) 92px,rgba(187, 187, 187, 0.03) 92px, rgba(187, 187, 187, 0.03) 124px,rgba(127, 127, 127, 0.03) 124px, rgba(127, 127, 127, 0.03) 137px,rgba(123, 123, 123, 0.03) 137px, rgba(123, 123, 123, 0.03) 156px,rgba(7, 7, 7, 0.03) 156px, rgba(7, 7, 7, 0.03) 198px,rgba(140, 140, 140, 0.03) 198px, rgba(140, 140, 140, 0.03) 224px,rgba(167, 167, 167, 0.03) 224px, rgba(167, 167, 167, 0.03) 249px),repeating-linear-gradient(135deg, rgba(118, 118, 118, 0.03) 0px, rgba(118, 118, 118, 0.03) 11px,rgba(69, 69, 69, 0.03) 11px, rgba(69, 69, 69, 0.03) 38px,rgba(202, 202, 202, 0.03) 38px, rgba(202, 202, 202, 0.03) 63px,rgba(213, 213, 213, 0.03) 63px, rgba(213, 213, 213, 0.03) 100px,rgba(238, 238, 238, 0.03) 100px, rgba(238, 238, 238, 0.03) 122px,rgba(221, 221, 221, 0.03) 122px, rgba(221, 221, 221, 0.03) 139px,rgba(34, 34, 34, 0.03) 139px, rgba(34, 34, 34, 0.03) 168px,rgba(52, 52, 52, 0.03) 168px, rgba(52, 52, 52, 0.03) 198px),linear-gradient(90deg, rgb(248, 248, 248),rgb(233, 233, 233));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+    background-blend-mode: multiply;
+    background-color: #dddddd;
 }
 .navbar-toggler {
     margin-bottom: 8px !important;
+    border: 1px solid #909090 !important;
+    background: rgb(241, 241, 241) !important;
+    position: relative;
+    top: 3px;
+    right: 5px;
 }
 .navbar h1 {
-    color: #f8f9fa;
+    color: white;
     font-family: 'Lobster', cursive;
     position: absolute;
     font-size: 2.3rem;
     margin-top: 6px;
     top: 7px;
+    text-shadow: -1px -1px 0 #909090, 1px -1px 0 #909090, -1px 1px 0 #909090, 1px 1px 0 #909090;
 }
 .login-title h1 {
     left: 50%;
@@ -46,37 +66,40 @@ main {
 }
 .nav-link {
     letter-spacing: 1px;
-    color: #f8f9fa;
+    color: white !important;
     position: relative;
+    text-shadow: -1px -1px 0 #909090, 1px -1px 0 #909090, -1px 1px 0 #909090, 1px 1px 0 #909090;
 }
 .nav-link::before {
     content: '';
     width: 90%;
-    height: 2px;
-    background: #C8CACB;
+    height: 5px;
+    background: white;
     position: absolute;
     bottom: 3px;
     left: 50%;
     transform: translateX(-50%) scaleX(0);
     transform-origin: right;
     transition: transform 250ms ease-out;
+    border: 1px solid #909090;
 }
 .nav-link:hover::before {
     transform: translateX(-50%) scaleX(1);
     transform-origin: left;
 }
 .active {
-    color: #eceeee !important;
+    color: white !important;
 }
 .active::before {
     content: '';
     width: 90%;
-    height: 2px;
-    background: #eceeee;
+    height: 5px;
+    background: white;
     position: absolute;
     bottom: 3px;
     left: 50%;
     transform: translateX(-50%) scaleX(1);
+    border: 1px solid #909090;
 }
 .navbar-nav .nav-item {
     margin-right: 7px !important;
@@ -112,17 +135,17 @@ main {
 .search-input {
     border-radius: 15px !important;
     height: 32px;
-    background: #262B2F;
+    background: #f3f3f3;
     padding-left: 40px;
     border: 1px solid #BBBBBD;
 }
 .nav-search .fa-search {
-    color: #BBBBBD;
+    color: #262B2F;
     font-size: 15px;
 }
 .search-input:focus {
-    background: #262B2F;
-    color: #BBBBBD;
+    background: #E9E9E9;
+    color: #262B2F;
 }
 .search-btn {
     position: absolute;
@@ -308,6 +331,18 @@ main {
           position: relative;
           top: 4px;
           margin-right: 10px;
+          color: #262B2F;
+          text-shadow: none;
+      }
+      .nav-link {
+        color: #262B2F !important;
+        text-shadow: none;
+      }
+      .nav-link:hover .fa {
+        color: #296ba1 !important;
+      }
+      .nav-link:hover {
+        color: #296ba1 !important;
       }
       .nav-link::before {
           display: none;
@@ -331,6 +366,9 @@ main {
   @media (max-width: 767px) {
       .nav-search {
           display: none;
+      }
+      .navbar-toggler {
+          left: 0;
       }
       .navbar-nav {
         padding-top: 0px;
@@ -693,8 +731,8 @@ main {
 
 
 /* ==== START OF GLOBAL FEED ==== */
-.dark-background {
-    background: #262B2F;
+.global-background {
+    background: #14141423;
 }
 .global-feed {
     display: grid;
@@ -702,7 +740,6 @@ main {
     grid-gap: 8px;
     padding: 15px 30px 30px;
     margin: auto;
-    background: #262B2F;
     max-width: 1400px;
 }
 .post-img-div {
@@ -1427,7 +1464,7 @@ main {
 .page-title {
     border: 2px solid white;
     color: #f8f9fa;
-    background: rgb(38, 43, 47);
+    background: #262B2F;
     padding: 10px 5px;
     max-width: 650px;
     width: 95%;
@@ -1497,10 +1534,10 @@ main {
 /* ==== LOGIN PAGE ==== */
 
 .login-background {
-    background-image: url("https://cdn.pixabay.com/photo/2014/06/15/22/36/pattern-369543_960_720.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+background-image: url("https://cdn.pixabay.com/photo/2015/08/11/22/43/geometric-885327_960_720.png");   
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
 }
 .login-background main {
     background: transparent;

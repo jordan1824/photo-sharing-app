@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{% static 'photo_sharing/main.css' %}">
 </head>
 <body {% if not user.is_authenticated %} class='login-background' {% endif %}>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <a href='/' {% if not user.is_authenticated %} class='login-title' {% endif %}><h1>Photo App</h1></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
