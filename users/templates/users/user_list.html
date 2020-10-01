@@ -2,9 +2,9 @@
 
 {% block content %}
 <br>
-<div class='nav-search nav-search-block'>
+<div class='nav-search nav-search-block mb-4'>
     <form class="form-inline my-2 my-lg-0" action='/user/list/'>
-        <input class="form-control mr-sm-2 search-input" type="text" name='q' placeholder="Search..." aria-label="Search" autocomplete="off" autofocus>
+        <input class="form-control mr-sm-2 search-input user-results-searchbar" type="text" name='q' placeholder="Search..." aria-label="Search" autocomplete="off" autofocus>
         <a class="my-2 my-sm-0 search-btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></a>
         <div class='loading-icon'>
             <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -15,7 +15,7 @@
 </div>
 {% for person in results %}
 <div class="row no-gutters user-page">
-    <div class='col-12 profile-background my-3'>
+    <div class='col-12 profile-background my-2'>
         <div class="profile-block">
             <div class='image-col mr-3 pl-1 my-auto'>
                 <img class='profile-image' src="{{ person.profile.image.url }}" alt="User Profile Image">

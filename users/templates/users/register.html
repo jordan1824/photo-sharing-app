@@ -4,12 +4,12 @@
 {% block content %}
 {% load static %}
 <div class="form-background register-form-background">
-    <h3 class='text-center mb-4 register-title'>Create An Account</h3>
+    <h3 class='text-center mb-4 register-title'>Create Account</h3>
     <form method="POST" class='register-form'>
         {% csrf_token %}
         <div class='form-field-container'>
             <p class='form-label'>Username:</p>
-            <input class='register-field username' type="text" name="username" placeholder="Enter username here..." autocomplete='off'>
+            <input class='register-field username' type="text" name="username" placeholder="Enter username here..." autocomplete='off' autofocus>
         </div>
         <div class='form-field-container'>
             <p class='form-label'>Email:</p>
@@ -23,7 +23,7 @@
             <p class='form-label'>Confirm Password:</p>
             <input class='register-field password-confirm' type="password" name="password_confirm" placeholder="Enter password again..." autocomplete='off'>
         </div>
-        <button class='submit-btn btn btn-primary mt-4' type='submit'>Register Account</button>
+        <button class='submit-btn btn btn-primary mt-4' type='submit'>Create Account</button>
     </form>
     <div class='text-center mt-3'>
         <a class='login-page-link' href="{% url 'login' %}">Return to Login</a>

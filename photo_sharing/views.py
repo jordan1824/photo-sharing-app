@@ -19,7 +19,6 @@ def home_feed(request):
     return render(request, 'photo_sharing/post_list.html', {
         "post_likes": list(PostLike.objects.filter(user=request.user).values_list('post_id', flat=True).all()),
         "newest_posts": newest_posts,
-        "following": list(Profile.objects.get(user=request.user).following.all())[:8],
         "home": True
     })
 

@@ -53,29 +53,9 @@
         <div class='home-sidebar'>
             <div class='sidebar-container'>
                 <h3 class='sidebar-username'>Welcome, {{ user.username|title }}!</h3>
-                <div class='sidebar-img-container'>
-                    <img src="{{ user.profile.image.url }}" alt="Your Profile Picture">
-                </div>
+                <p class='sidebar-text'>You are not currently following any users.<br> You can follow users & their posts will appear here.</p>
                 <div class='sidebar-btn-group'>
-                <a href='/user/update-profile/' type="button" class="btn btn-dark sidebar-btn">Edit Profile</a>
-                <a href='/user/profile/{{ user.username }}/' type="button" class="btn btn-dark sidebar-btn">View Profile</a>
-                <a href='/new-post/' type="button" class="btn btn-dark sidebar-btn">Create New Post</a>
-                <a href='/post-likes-list/' type="button" class="btn btn-dark sidebar-btn">View Liked Posts</a>
-                <a href='/global-posts/' type="button" class="btn btn-dark sidebar-btn">View Global Feed</a>
-                </div>
-                <div class='sidebar-block-content'>
-                    {% if following %}
-                    <h5 class='sidebar-follow-title'>Your Favourite Users:</h5>
-                    <div class='sidebar-following-list'>
-                        {% for person in following %}
-                        <div class='sidebar-follow-img-container'>
-                            <a href="/user/profile/{{ person.username }}/"><img src="{{ person.profile.image.url }}" alt="User Image"></a>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <p class='text-center pt-3 pb-2'>You are not following any users.</p>
-                    {% endif %}
+                <a href='/user/list/?q=' type="button" class="btn btn-light border sidebar-btn">View All Users</a>
                 </div>
             </div>
         </div>
