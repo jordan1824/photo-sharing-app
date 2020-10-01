@@ -60,7 +60,7 @@
             </div>
         {% empty %}
             {% if person == user %}
-            <div class='empty-profile-posts text-center profile-title py-3 page-title'>You do not have any posts.</div>   
+            <div class='empty-profile-posts text-center profile-title py-3 page-title'>You do not have any posts. <br><a class='btn btn-primary border mt-3 mb-2' href="{% url 'create-post' %}">Create New Post</a></div>   
             {% else %} 
             <div class='empty-profile-posts text-center profile-title py-3 page-title'>{{ person.username|title }} does not have any posts.</div>  
             {% endif %}
