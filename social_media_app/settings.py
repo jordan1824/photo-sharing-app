@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = (os.environ.get('DEBUG_VALUE') == "True")
 DEBUG = True
 
-ALLOWED_HOSTS = ['photo-sharing--app.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['photo-sharing--app.herokuapp.com', 'localhost', 'www.photoapp.jordandeveau.ca', 'photoapp.jordandeveau.ca']
 
 
 # Application definition
