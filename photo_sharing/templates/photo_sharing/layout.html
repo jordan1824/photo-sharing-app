@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'photo_sharing/main.css' %}">
 </head>
-<body {% if not user.is_authenticated %} class='login-background' {% endif %}>
+<body>
     <nav class="navbar navbar-expand-lg navbar-light">
       <a href='/' {% if not user.is_authenticated %} class='login-title' {% endif %}><h1>Photo App</h1></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,8 +42,8 @@
                 <li class='nav-item mx-auto'><a class='nav-link {% if createPost %} active {% endif %}' data-toggle="tooltip" data-placement="bottom" title="Create Post" href='{% url "create-post" %}'><span class='desktop-nav-icon'><i class="fa fa-plus-square" aria-hidden="true"></i></span><span class='mobile-nav-title'>Create Post</span></a></li>
                 <li class='nav-item mx-auto'><a class='nav-link {% if logout %} active {% endif %}' data-toggle="tooltip" data-placement="bottom" title="Logout" href='{% url "logout" %}'><span class='desktop-nav-icon'><i class="fa fa-sign-out" aria-hidden="true"></i></span><span class='mobile-nav-title'>Logout</span></a></li>
             {% else %}
-                <li class='nav-item mx-auto'><a class='nav-link {% if login %} active {% endif %}' href='{% url "login" %}'>Login</a></li>
-                <li class='nav-item mx-auto'><a class='nav-link {% if register %} active {% endif %}' href='{% url "register" %}'>Register</a></li>
+                <li class='nav-item mx-auto'><a class='nav-link logged-out-link {% if login %} active {% endif %}' href='{% url "login" %}'>Login</a></li>
+                <li class='nav-item mx-auto'><a class='nav-link logged-out-link {% if register %} active {% endif %}' href='{% url "register" %}'>Register</a></li>
             {% endif %}
         </ul>
       </div>

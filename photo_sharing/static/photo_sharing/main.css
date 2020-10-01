@@ -1532,12 +1532,13 @@ main {
 /* ==== END OF SEARCH PAGE ==== */
 
 /* ==== LOGIN PAGE ==== */
-
-.login-background {
-background-image: url("https://cdn.pixabay.com/photo/2015/08/11/22/43/geometric-885327_960_720.png");   
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center;
+.logged-out-link {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white !important;
+    position: relative;
+    top: -4px;
+    text-shadow: -1px -1px 0 #909090, 1px -1px 0 #909090, -1px 1px 0 #909090, 1px 1px 0 #909090;
 }
 .login-background main {
     background: transparent;
@@ -1546,32 +1547,102 @@ background-position: center;
     background: transparent;
 }
 .form-background {
-    background: #f8f9fa;
     max-width: 400px;
     width: 90%;
-    margin: 50px auto 60px;
-    padding: 40px 5px 50px;
-    border: 4px solid #24282c;
+    padding: 10px 5px 30px;
     color: #262B2F;
+    margin: 50px auto 0px;
+    background: linear-gradient(125deg, #c0bfbfd3, #575757d3);
+    box-shadow: 7px 7px 12px grey, -7px 7px 12px grey;
+    border: 2px solid white;
 }
 .form-background form {
-    width: 70%;
+    width: 85%;
     margin: auto;
 }
+.login-title {
+    text-align: center;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    padding: 10px 0px 0px;
+    color: #F8F9FA;
+    font-weight: 700;
+    text-shadow: -1px -1px 0 #909090, 1px -1px 0 #909090, -1px 1px 0 #909090, 1px 1px 0 #909090;
+}
+.login-br {
+    height: 1px;
+}
 .submit-btn {
+    margin: 1em auto 1.3em;
+    width: 80%;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+    border: 1px solid white;
     display: block;
-    width: auto;
-    margin: auto;
-    font-size: 18px;
+    text-align: center;
+}
+.submit-btn:hover { 
+    background: #006adb;
+    border: 1px solid white;
+}
+.logout-background {
+    background: linear-gradient(165deg, #c0bfbfd3, #575757d3);
 }
 .logout p {
     font-size: 20px;
 }
 .logout p a {
     font-size: 17px;
+    color: rgb(0, 0, 0);
+    transition: color 0.3s;
+}
+.logout p a:hover {
+    color: rgb(71, 71, 71) !important;
+}
+.login-form label {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-shadow: -1px -1px 0 #909090, 1px -1px 0 #909090, -1px 1px 0 #909090, 1px 1px 0 #909090;
+}
+.login-page-link {
+    font-size: 1.05rem;
+    color: white;
+}
+.login-page-link:hover {
+    color: white;
+}
+.login-form .alert {
+    background: #007bff;
+    color: white;
+}
+.login-form .alert ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@media (max-width: 430px) {
+    .form-background form {
+        width: 90%;
+    }
 }
 
 /* ==== END OF LOGIN PAGE ==== */
+
+/* ==== START OF REGISTER PAGE ==== */
+
+.register-form-background {
+    max-width: 500px;
+    margin: 30px auto 50px;
+}
+
+/* ==== END OF REGISTER PAGE ==== */
 
 /* ==== START OF CREATE POST PAGE ==== */
 
@@ -1771,23 +1842,6 @@ background-position: center;
     max-width: 550px;
     margin: auto;
 }
-
-/* ==== REGISTER PAGE ==== */
-
-.register-form-background {
-    background: #262B2F;
-    width: 600px;
-    margin: 50px auto 60px;
-    padding: 40px 5px 50px;
-    box-shadow: 7px 7px 13px grey;
-    border: 2px solid white;
-}
-.register-form-background form {
-    width: 80%;
-    margin: auto;
-}
-
-/* ==== END OF REGISTER PAGE ==== */
 
 /* ==== FOOTER ==== */
 
