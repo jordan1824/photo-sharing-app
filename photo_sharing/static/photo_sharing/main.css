@@ -139,6 +139,15 @@ main {
     position: absolute;
     left: 13px;
     top: 3px;
+    padding: 0;
+    margin: 0;
+    display: inline;
+    background: none;
+    border: none;
+    outline: none;
+}
+.search-btn:focus {
+    outline: none;
 }
 .user-results-searchbar {
     background: white !important;
@@ -1989,6 +1998,9 @@ footer {
 .post-description {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+.global-background {
+    min-height: 102vh;
 }
 
 

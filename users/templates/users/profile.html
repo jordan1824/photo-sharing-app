@@ -22,9 +22,9 @@
                 <p class='mt-2 profile-bio-text'>{{ person.profile.bio }}</p>
                 {% if person == user %}
                     <div class='profile-btns-container'>
-                        <a type="button" data-toggle="tooltip" data-placement="left" title="View Liked Posts" class='btn text-light profile-likes-btn' href="{% url 'post-likes-list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                        <btn type="button" data-toggle="tooltip" data-placement="left" title="Modify Post" class='btn text-light modify-post-btn'><i class="fa fa-database" aria-hidden="true"></i></btn>
-                        <a type="button" data-toggle="tooltip" data-placement="left" title="Edit Profile" class='btn text-light edit-profile-btn' href="{% url 'edit-profile' %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <a data-toggle="tooltip" data-placement="left" title="View Liked Posts" class='btn text-light profile-likes-btn' href="{% url 'post-likes-list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                        <btn data-toggle="tooltip" data-placement="left" title="Modify Post" class='btn text-light modify-post-btn'><i class="fa fa-database" aria-hidden="true"></i></btn>
+                        <a data-toggle="tooltip" data-placement="left" title="Edit Profile" class='btn text-light edit-profile-btn' href="{% url 'edit-profile' %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                     </div>
                 {% else %}
                     {% if person not in following_list %}
