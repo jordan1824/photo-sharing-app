@@ -1983,10 +1983,10 @@ footer {
 
 /* Remove scrollbar */ 
 
-.post-description-section::-webkit-scrollbar {
+.post-description::-webkit-scrollbar {
     display: none;
 }
-.post-description-section {
+.post-description {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
