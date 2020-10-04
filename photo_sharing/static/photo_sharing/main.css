@@ -1981,6 +1981,15 @@ footer {
 
 /* ==== END OF FOOTER ==== */
 
+/* Remove scrollbar */ 
+
+.post-description-section::-webkit-scrollbar {
+    display: none;
+}
+.post-description-section {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
 
 @media (max-width: 767.8px) {
